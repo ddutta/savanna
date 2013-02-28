@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>eho.server.service.cluster_ops &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/tweaks.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.tweet.js"></script>
+    <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+    <script type='text/javascript'>
+        /*$(document).ready(function(){
+            $("#twitter_feed").tweet({
+                username: "openstack",
+                query: "from:openstack",
+                avatar_size: 32,
+                count: 4,
+                loading_text: "loading tweets..."
+            });
+        });*/
+    </script>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for eho.server.service.cluster_ops</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">novaclient.v1_1</span> <span class="kn">import</span> <span class="n">client</span> <span class="k">as</span> <span class="n">nova_client</span>
+<span class="kn">from</span> <span class="nn">paramiko</span> <span class="kn">import</span> <span class="n">SSHClient</span><span class="p">,</span> <span class="n">AutoAddPolicy</span>
+<span class="kn">from</span> <span class="nn">eho.server.storage.models</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">ServiceUrl</span>
+
+<span class="kn">from</span> <span class="nn">eho.server.storage.storage</span> <span class="kn">import</span> <span class="n">DB</span>
+
+
+<span class="k">def</span> <span class="nf">_create_nova_client</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">nova_client</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span> <span class="s">&quot;nova&quot;</span><span class="p">,</span> <span class="s">&quot;admin&quot;</span><span class="p">,</span>
+                              <span class="s">&quot;http://172.18.79.139:5000/v2.0/&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_check_finding</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">entity</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Unable to find entity with </span><span class="si">%s</span><span class="s"> &quot;</span>
+                           <span class="s">&quot;</span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_find_by_id</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">entity</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entity</span>
+
+    <span class="k">return</span> <span class="bp">None</span>
+
+
+<span class="k">def</span> <span class="nf">_find_by_name</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">entity</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entity</span>
+
+    <span class="k">return</span> <span class="bp">None</span>
+
+
+<span class="k">def</span> <span class="nf">_ensure_zero</span><span class="p">(</span><span class="n">ret</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Command returned non-zero status code - </span><span class="si">%i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">ret</span><span class="p">)</span>
+
+<span class="c">#def _connect_to_node(ssh, host):</span>
+<span class="c">#  ssh.set_missing_host_key_policy(AutoAddPolicy())</span>
+<span class="c">#  ssh.connect(host, username=&#39;root&#39;, password=&#39;swordfish&#39;)</span>
+
+
+<span class="k">def</span> <span class="nf">_execute_command_on_node</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+    <span class="n">ssh</span> <span class="o">=</span> <span class="n">SSHClient</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;root&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&#39;swordfish&#39;</span><span class="p">)</span>
+        <span class="n">chan</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">get_transport</span><span class="p">()</span><span class="o">.</span><span class="n">open_session</span><span class="p">()</span>
+        <span class="n">chan</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">chan</span><span class="o">.</span><span class="n">recv_exit_status</span><span class="p">()</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="launch_cluster"><a class="viewcode-back" href="../../../../apidoc/eho.server.service.html#eho.server.service.cluster_ops.launch_cluster">[docs]</a><span class="k">def</span> <span class="nf">launch_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">):</span>
+    <span class="n">nova</span> <span class="o">=</span> <span class="n">_create_nova_client</span><span class="p">()</span>
+
+    <span class="n">clmap</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">id</span>
+    <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_find_by_id</span><span class="p">(</span><span class="n">nova</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span>
+                                 <span class="n">cluster</span><span class="o">.</span><span class="n">base_image_id</span><span class="p">)</span>
+    <span class="n">_check_finding</span><span class="p">(</span><span class="n">clmap</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">],</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">cluster</span><span class="o">.</span><span class="n">base_image_id</span><span class="p">)</span>
+
+    <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;nodes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">nc</span> <span class="ow">in</span> <span class="n">cluster</span><span class="o">.</span><span class="n">node_counts</span><span class="p">:</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">cf</span> <span class="ow">in</span> <span class="n">nc</span><span class="o">.</span><span class="n">node_template</span><span class="o">.</span><span class="n">node_template_configs</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">node_process_property</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="n">ntype</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">node_template</span><span class="o">.</span><span class="n">node_type</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">templ_id</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">node_template</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">flv_id</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">node_template</span><span class="o">.</span><span class="n">flavor_id</span>
+        <span class="n">flv</span> <span class="o">=</span> <span class="n">_find_by_name</span><span class="p">(</span><span class="n">nova</span><span class="o">.</span><span class="n">flavors</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span> <span class="n">flv_id</span><span class="p">)</span>
+        <span class="n">_check_finding</span><span class="p">(</span><span class="n">flv</span><span class="p">,</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">flv_id</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nc</span><span class="o">.</span><span class="n">count</span><span class="p">):</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">-</span><span class="si">%i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ntype</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;templ_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">templ_id</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;flavor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flv</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;configs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+            <span class="n">node</span><span class="p">[</span><span class="s">&#39;isup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;nodes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;nodes&#39;</span><span class="p">]:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Starting node for cluster &#39;</span><span class="si">%s</span><span class="s">&#39;, node: </span><span class="si">%s</span><span class="s">, iamge: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span>
+                      <span class="n">cluster</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">])</span>
+        <span class="n">_launch_node</span><span class="p">(</span><span class="n">nova</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;image&#39;</span><span class="p">])</span>
+
+    <span class="n">all_set</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;All nodes for cluster &#39;</span><span class="si">%s</span><span class="s">&#39; has been started, waiting isup&quot;</span><span class="p">,</span>
+                  <span class="n">cluster</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">all_set</span><span class="p">:</span>
+        <span class="n">all_set</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;nodes&#39;</span><span class="p">]:</span>
+            <span class="n">_check_if_up</span><span class="p">(</span><span class="n">nova</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;isup&#39;</span><span class="p">]:</span>
+                <span class="n">all_set</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;All nodes of cluster &#39;</span><span class="si">%s</span><span class="s">&#39; are up: </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span>
+                  <span class="n">cluster</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">all_set</span><span class="p">)</span>
+
+    <span class="n">_pre_cluster_setup</span><span class="p">(</span><span class="n">clmap</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;nodes&#39;</span><span class="p">]:</span>
+        <span class="n">_setup_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">clmap</span><span class="p">)</span>
+        <span class="n">_register_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">cluster</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;All nodes of cluster &#39;</span><span class="si">%s</span><span class="s">&#39; are configured and registered, &quot;</span>
+                  <span class="s">&quot;starting cluster...&quot;</span><span class="p">,</span> <span class="n">cluster</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">_start_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">clmap</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_launch_node</span><span class="p">(</span><span class="n">nova</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+    <span class="n">srv</span> <span class="o">=</span> <span class="n">nova</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="n">image</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;flavor&#39;</span><span class="p">])</span>
+    <span class="c">#srv = _find_by_name(nova_client.servers.list(), node[&#39;name&#39;])</span>
+    <span class="n">node</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">srv</span><span class="o">.</span><span class="n">id</span>
+
+
+<span class="k">def</span> <span class="nf">_check_if_up</span><span class="p">(</span><span class="n">nova</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;isup&#39;</span><span class="p">]:</span>
+        <span class="c"># all set</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;ip&#39;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+        <span class="n">srv</span> <span class="o">=</span> <span class="n">_find_by_name</span><span class="p">(</span><span class="n">nova</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">])</span>
+        <span class="n">nets</span> <span class="o">=</span> <span class="n">srv</span><span class="o">.</span><span class="n">networks</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;supernetwork&#39;</span> <span class="ow">in</span> <span class="n">nets</span><span class="p">:</span>
+            <span class="c"># it does not have interfaces yet</span>
+            <span class="k">return</span>
+        <span class="n">ips</span> <span class="o">=</span> <span class="n">nets</span><span class="p">[</span><span class="s">&#39;supernetwork&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ips</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c"># public IP is not defined yet</span>
+            <span class="k">return</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ips</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip_internal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ips</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">_execute_command_on_node</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;ip&#39;</span><span class="p">],</span> <span class="s">&#39;ls -l /&#39;</span><span class="p">)</span>
+        <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="c"># ssh not ready yet</span>
+        <span class="c"># TODO log error if it takes more than 5 minutes to start-up</span>
+        <span class="k">return</span>
+
+    <span class="n">node</span><span class="p">[</span><span class="s">&#39;isup&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+
+<span class="k">def</span> <span class="nf">_pre_cluster_setup</span><span class="p">(</span><span class="n">clmap</span><span class="p">):</span>
+    <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;master&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;slaves&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;nodes&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;JT+NN&#39;</span><span class="p">:</span>
+            <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;master&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip&#39;</span><span class="p">]</span>
+            <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;master_internal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip_internal&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;TT+DN&#39;</span><span class="p">:</span>
+            <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;slaves&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;ip&#39;</span><span class="p">],</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip_internal&#39;</span><span class="p">]))</span>
+
+    <span class="k">if</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;master&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;No master node is defined in the cluster&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_sed_escape</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="s">&#39;/&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\\\\</span><span class="s">&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">ch</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">_prepare_config_cmd</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">configs</span><span class="p">):</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="s">&#39;cat </span><span class="si">%s</span><span class="s">.eho_template&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">configs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">command</span> <span class="o">+=</span> <span class="s">&#39; | sed -e &quot;s/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/g&quot; 2&gt;&amp;1&#39;</span> \
+                   <span class="o">%</span> <span class="p">(</span><span class="n">_sed_escape</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">_sed_escape</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">command</span> <span class="o">+</span> <span class="s">&#39; | tee </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">filename</span>
+
+
+<div class="viewcode-block" id="escape_doublequotes"><a class="viewcode-back" href="../../../../apidoc/eho.server.service.html#eho.server.service.cluster_ops.escape_doublequotes">[docs]</a><span class="k">def</span> <span class="nf">escape_doublequotes</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="o">==</span> <span class="s">&#39;&quot;&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">ch</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_wrap_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s">&#39; ; echo -e </span><span class="se">\&quot;</span><span class="s">-------------------------------</span><span class="se">\\</span><span class="s">n[$(date)] &#39;</span> \
+             <span class="s">&#39;Running</span><span class="se">\\</span><span class="s">n</span><span class="si">%s</span><span class="se">\\</span><span class="s">n</span><span class="se">\&quot;</span><span class="s"> &gt;&gt; /tmp/eho_setup_log&#39;</span> \
+             <span class="o">%</span> <span class="n">escape_doublequotes</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span> <span class="o">+</span> <span class="s">&#39; ; &#39;</span> <span class="o">+</span> <span class="n">command</span> <span class="o">+</span> <span class="s">&#39; &gt;&gt; /tmp/eho_setup_log 2&gt;&amp;1&#39;</span>
+
+
+<div class="viewcode-block" id="debug"><a class="viewcode-back" href="../../../../apidoc/eho.server.service.html#eho.server.service.cluster_ops.debug">[docs]</a><span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="n">fl</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/mydebug&#39;</span><span class="p">,</span> <span class="s">&#39;at&#39;</span><span class="p">)</span>
+    <span class="n">fl</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="n">fl</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_setup_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">clmap</span><span class="p">):</span>
+    <span class="n">node</span><span class="p">[</span><span class="s">&#39;configs&#39;</span><span class="p">][</span><span class="s">&#39;</span><span class="si">%%%hd</span><span class="s">fs_namenode_url</span><span class="si">%%</span><span class="s">%&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;hdfs://</span><span class="si">%s</span><span class="s">:8020&#39;</span> \
+                                                 <span class="o">%</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;master_internal&#39;</span><span class="p">]</span>
+    <span class="n">node</span><span class="p">[</span><span class="s">&#39;configs&#39;</span><span class="p">][</span><span class="s">&#39;</span><span class="si">%%</span><span class="s">%mapred_jobtracker_url</span><span class="si">%%</span><span class="s">%&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">:8021&#39;</span> \
+                                                     <span class="o">%</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;master_internal&#39;</span><span class="p">]</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;echo 123&#39;</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">_prepare_config_cmd</span><span class="p">(</span><span class="s">&#39;/etc/hadoop/core-site.xml&#39;</span><span class="p">,</span>
+                                  <span class="n">node</span><span class="p">[</span><span class="s">&#39;configs&#39;</span><span class="p">])</span>
+    <span class="n">cmd</span> <span class="o">+=</span> <span class="n">_wrap_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">_prepare_config_cmd</span><span class="p">(</span><span class="s">&#39;/etc/hadoop/mapred-site.xml&#39;</span><span class="p">,</span>
+                                  <span class="n">node</span><span class="p">[</span><span class="s">&#39;configs&#39;</span><span class="p">])</span>
+    <span class="n">cmd</span> <span class="o">+=</span> <span class="n">_wrap_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+    <span class="n">command</span> <span class="o">=</span> <span class="s">&#39;/etc/hadoop/create_dirs.sh&#39;</span>
+    <span class="n">cmd</span> <span class="o">+=</span> <span class="n">_wrap_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;JT+NN&#39;</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&#39;echo -e &quot;&#39;</span>
+        <span class="k">for</span> <span class="n">slave</span> <span class="ow">in</span> <span class="n">clmap</span><span class="p">[</span><span class="s">&#39;slaves&#39;</span><span class="p">]:</span>
+            <span class="n">command</span> <span class="o">+=</span> <span class="n">slave</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\\</span><span class="s">n&#39;</span>
+        <span class="n">command</span> <span class="o">+=</span> <span class="s">&#39;&quot; | tee /etc/hadoop/slaves&#39;</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="n">_wrap_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&#39;echo </span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s"> | tee /etc/hadoop/masters&#39;</span> <span class="o">%</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip_internal&#39;</span><span class="p">]</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="n">_wrap_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&#39;su -c </span><span class="se">\&#39;</span><span class="s">hadoop namenode -format -force</span><span class="se">\&#39;</span><span class="s"> hadoop&#39;</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="n">_wrap_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">_execute_command_on_node</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;ip&#39;</span><span class="p">],</span> <span class="n">cmd</span><span class="p">)</span>
+    <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_register_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">cluster</span><span class="p">):</span>
+    <span class="n">debug</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;templ_id&#39;</span><span class="p">])</span>
+    <span class="n">node_obj</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">],</span> <span class="n">cluster</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;templ_id&#39;</span><span class="p">])</span>
+    <span class="n">srv_url_jt</span> <span class="o">=</span> <span class="n">ServiceUrl</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&#39;jobtracker&#39;</span><span class="p">,</span> <span class="s">&#39;http://</span><span class="si">%s</span><span class="s">:50030&#39;</span>
+                                                      <span class="o">%</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip&#39;</span><span class="p">])</span>
+    <span class="n">srv_url_nn</span> <span class="o">=</span> <span class="n">ServiceUrl</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&#39;namenode&#39;</span><span class="p">,</span> <span class="s">&#39;http://</span><span class="si">%s</span><span class="s">:50070&#39;</span>
+                                                    <span class="o">%</span> <span class="n">node</span><span class="p">[</span><span class="s">&#39;ip&#39;</span><span class="p">])</span>
+
+    <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node_obj</span><span class="p">)</span>
+    <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">srv_url_jt</span><span class="p">)</span>
+    <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">srv_url_nn</span><span class="p">)</span>
+
+    <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_start_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">clmap</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">_execute_command_on_node</span><span class="p">(</span><span class="n">clmap</span><span class="p">[</span><span class="s">&#39;master&#39;</span><span class="p">],</span>
+                                   <span class="s">&#39;su -c /usr/sbin/start-all.sh hadoop&#39;</span><span class="p">)</span>
+    <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Cluster &#39;</span><span class="si">%s</span><span class="s">&#39; successfully started!&quot;</span><span class="p">,</span> <span class="n">cluster</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="stop_cluster"><a class="viewcode-back" href="../../../../apidoc/eho.server.service.html#eho.server.service.cluster_ops.stop_cluster">[docs]</a><span class="k">def</span> <span class="nf">stop_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">):</span>
+    <span class="n">nova</span> <span class="o">=</span> <span class="n">_create_nova_client</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">cluster</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+        <span class="n">nova</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">vm_id</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;VM &#39;</span><span class="si">%s</span><span class="s">&#39; has been stopped&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">vm_id</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Mirantis Inc..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,174 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common Package &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/tweaks.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/jquery.tweet.js"></script>
+    <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="../index.html" />
+    <script type='text/javascript'>
+        /*$(document).ready(function(){
+            $("#twitter_feed").tweet({
+                username: "openstack",
+                query: "from:openstack",
+                avatar_size: 32,
+                count: 4,
+                loading_text: "loading tweets..."
+            });
+        });*/
+    </script>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">common Package</a><ul>
+<li><a class="reference internal" href="#module-eho.common.test_lib"><tt class="docutils literal"><span class="pre">test_lib</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/apidoc/eho.common.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="common-package">
+<h1>common Package<a class="headerlink" href="#common-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-eho.common.test_lib">
+<span id="test-lib-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">test_lib</span></tt> Module<a class="headerlink" href="#module-eho.common.test_lib" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="eho.common.test_lib.QuantumTestResult">
+<em class="property">class </em><tt class="descclassname">eho.common.test_lib.</tt><tt class="descname">QuantumTestResult</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#QuantumTestResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.QuantumTestResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">nose.result.TextTestResult</span></tt></p>
+<dl class="method">
+<dt id="eho.common.test_lib.QuantumTestResult.addError">
+<tt class="descname">addError</tt><big>(</big><em>test</em>, <em>err</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#QuantumTestResult.addError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.QuantumTestResult.addError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides normal addError to add support for errorClasses.
+If the exception is a registered class, the error will be added
+to the list for that class, not errors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="eho.common.test_lib.QuantumTestResult.addFailure">
+<tt class="descname">addFailure</tt><big>(</big><em>test</em>, <em>err</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#QuantumTestResult.addFailure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.QuantumTestResult.addFailure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="eho.common.test_lib.QuantumTestResult.addSuccess">
+<tt class="descname">addSuccess</tt><big>(</big><em>test</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#QuantumTestResult.addSuccess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.QuantumTestResult.addSuccess" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="eho.common.test_lib.QuantumTestResult.getDescription">
+<tt class="descname">getDescription</tt><big>(</big><em>test</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#QuantumTestResult.getDescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.QuantumTestResult.getDescription" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="eho.common.test_lib.QuantumTestResult.startTest">
+<tt class="descname">startTest</tt><big>(</big><em>test</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#QuantumTestResult.startTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.QuantumTestResult.startTest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="eho.common.test_lib.QuantumTestRunner">
+<em class="property">class </em><tt class="descclassname">eho.common.test_lib.</tt><tt class="descname">QuantumTestRunner</tt><big>(</big><em>stream=&lt;open file '&lt;stderr&gt;'</em>, <em>mode 'w' at 0x10d138270&gt;</em>, <em>descriptions=1</em>, <em>verbosity=1</em>, <em>config=None</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#QuantumTestRunner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.QuantumTestRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">nose.core.TextTestRunner</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="eho.common.test_lib.run_tests">
+<tt class="descclassname">eho.common.test_lib.</tt><tt class="descname">run_tests</tt><big>(</big><em>c=None</em><big>)</big><a class="reference internal" href="../_modules/eho/common/test_lib.html#run_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eho.common.test_lib.run_tests" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Mirantis Inc..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

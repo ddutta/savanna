@@ -1,0 +1,19 @@
+service Package
+===============
+
+:mod:`api` Module
+-----------------
+
+.. automodule:: eho.server.service.api
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`cluster_ops` Module
+-------------------------
+
+.. automodule:: eho.server.service.cluster_ops
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
