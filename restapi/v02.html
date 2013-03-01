@@ -159,10 +159,10 @@ with the MIME type value &#8220;application/json&#8221; or adding &#8221;.json&#
 The default response format is &#8220;application/json&#8221; if the client omits to specify an Accept header
 or append the &#8221;.json&#8221; extension in the URL path.</p>
 <p>Example:</p>
-<div class="highlight-http"><pre>GET /v0.1/clusters.json</pre>
+<div class="highlight-http"><pre>GET /v0.2/clusters.json</pre>
 </div>
 <p>or</p>
-<div class="highlight-http"><pre>GET /v0.1/clusters
+<div class="highlight-http"><pre>GET /v0.2/clusters
 Accept: application/json</pre>
 </div>
 </div>
@@ -172,11 +172,11 @@ Accept: application/json</pre>
 <p>The EHO API supports filtering based on all top level attributes of a resource.
 Filters are applicable to all list requests.</p>
 <p>For example, the following request returns all clusters named &#8216;foobar&#8217;:</p>
-<div class="highlight-http"><pre>GET /v0.1/clusters?name=foobar</pre>
+<div class="highlight-http"><pre>GET /v0.2/clusters?name=foobar</pre>
 </div>
 <p>When you specify multiple filters, the EHO API returns only objects that meet all filtering criteria.
 The operation applies an AND condition among the filters, for example:</p>
-<div class="highlight-http"><pre>GET /v0.1/clusters?name=foo1&amp;some_attr=some_value</pre>
+<div class="highlight-http"><pre>GET /v0.2/clusters?name=foo1&amp;some_attr=some_value</pre>
 </div>
 <p>Currently, there is no OR mechanism for filtering. Alternatively, you can issue a distinct request
 for each filter and build a response set from the received responses on the client-side.</p>
@@ -184,7 +184,7 @@ for each filter and build a response set from the received responses on the clie
 The EHO API has a mechanism to limit the set of attributes returned.
 You can use the fields query parameter to control the attributes returned from the EHO API.</p>
 <p>For example, the following request returns only id, name and status for each cluster:</p>
-<div class="highlight-http"><pre>GET /v0.1/clusters.json?fields=id&amp;fields=name&amp;fields=status</pre>
+<div class="highlight-http"><pre>GET /v0.2/clusters.json?fields=id&amp;fields=name&amp;fields=status</pre>
 </div>
 <p>Such selector could be useful for displaying some info about running clusters on GUI.</p>
 <p>Filtering and column selection features could be used together too.</p>
@@ -250,8 +250,16 @@ And the last attribute is &#8216;error_message&#8217; that contains human readab
 <td>A name of the node template</td>
 </tr>
 <tr class="row-even"><td>node_type</td>
-<td>string (enum)</td>
-<td>A type of the node</td>
+<td>object</td>
+<td>NodeType info</td>
+</tr>
+<tr class="row-odd"><td>node_type.name</td>
+<td>string</td>
+<td>Name of the node type</td>
+</tr>
+<tr class="row-even"><td>node_type.processes</td>
+<td>array of strings</td>
+<td>List of process names that will be executed on node</td>
 </tr>
 <tr class="row-odd"><td>tenant_id</td>
 <td>string</td>
@@ -311,7 +319,10 @@ And the last attribute is &#8216;error_message&#8217; that contains human readab
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3412&quot;</span><span class="p">,</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;taskTracker_and_dataNode.medium&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
     <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
     <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
     <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -354,13 +365,13 @@ the existing cluster.</p>
 <td>[required for update] string</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td>tenant_id</td>
-<td>string</td>
-<td>An id of the OpenStack&#8217;s tenant</td>
-</tr>
-<tr class="row-even"><td>name</td>
+<tr class="row-odd"><td>name</td>
 <td>string</td>
 <td>A name of the cluster</td>
+</tr>
+<tr class="row-even"><td>tenant_id</td>
+<td>string</td>
+<td>An id of the OpenStack&#8217;s tenant</td>
 </tr>
 <tr class="row-odd"><td>node_templates</td>
 <td>map (object)</td>
@@ -496,7 +507,15 @@ In fact, a node is a virtual machine managed by OpenStack Nova.</p>
 <td>string</td>
 <td>VM id in OpenStack cluster</td>
 </tr>
-<tr class="row-odd"><td>node_template_id</td>
+<tr class="row-odd"><td>node_template</td>
+<td>object</td>
+<td>Node Template used to create this node</td>
+</tr>
+<tr class="row-even"><td>node_template.id</td>
+<td>string</td>
+<td>Node Template id used to create this node</td>
+</tr>
+<tr class="row-odd"><td>node_template.name</td>
 <td>string</td>
 <td>Node Template name used to create this node</td>
 </tr>
@@ -505,7 +524,10 @@ In fact, a node is a virtual machine managed by OpenStack Nova.</p>
 <p><strong>2.4.3 Example</strong></p>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;vm_id&quot;</span><span class="p">:</span> <span class="s2">&quot;dee040e1-f58f-4d54-846b-fec8e2bd9b21&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node_template_id&quot;</span><span class="p">:</span> <span class="s2">&quot;123456&quot;</span>
+    <span class="nt">&quot;node_template&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;123456&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jt_nn.xlarge&quot;</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -531,26 +553,26 @@ In fact, a node is a virtual machine managed by OpenStack Nova.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>GET</td>
-<td>/v0.1/node-templates</td>
+<td>/v0.2/node-templates</td>
 <td>Lists summary for all Node Templates in EHO that are
 accessible to the tenant who submits the request</td>
 </tr>
 <tr class="row-odd"><td>POST</td>
-<td>/v0.1/node-templates</td>
+<td>/v0.2/node-templates</td>
 <td>Creates a new Node Template</td>
 </tr>
 <tr class="row-even"><td>GET</td>
-<td>/v0.1/node-templates/{node_template_id}</td>
+<td>/v0.2/node-templates/{node_template_id}</td>
 <td>Lists information for the specified Node Template</td>
 </tr>
 <tr class="row-odd"><td>PUT</td>
-<td>/v0.1/node-templates/{node_template_id}</td>
+<td>/v0.2/node-templates/{node_template_id}</td>
 <td>Updates a specific Node Template identified by
 node_template_id
 (only unused Node Templates could be modified)</td>
 </tr>
 <tr class="row-even"><td>DELETE</td>
-<td>/v0.1/node-templates/{node_template_id}</td>
+<td>/v0.2/node-templates/{node_template_id}</td>
 <td>Destroyed a specified Node Template
 (only unused Node Templates could be removed)</td>
 </tr>
@@ -560,8 +582,8 @@ node_template_id
 <div class="section" id="list-all-node-templates">
 <h3>3.1.2 List all Node Templates<a class="headerlink" href="#list-all-node-templates" title="Permalink to this headline">¶</a></h3>
 <dl class="get">
-<dt id="get--v0.1-node-templates">
-<tt class="descname">GET </tt><tt class="descname">/v0.1/node-templates</tt><a class="headerlink" href="#get--v0.1-node-templates" title="Permalink to this definition">¶</a></dt>
+<dt id="get--v0.2-node-templates">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/node-templates</tt><a class="headerlink" href="#get--v0.2-node-templates" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 200 (OK)</p>
@@ -574,7 +596,7 @@ If you have an admin role, then this request returns all the Node Templates of a
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET /v0.1/node-templates
+<div class="highlight-http"><pre>GET /v0.2/node-templates
 Accept: application/json
 X-Auth-Token: SOME_AUTH_TOKEN</pre>
 </div>
@@ -589,7 +611,10 @@ X-Auth-Token: SOME_AUTH_TOKEN</pre>
         <span class="p">{</span>
             <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3412&quot;</span><span class="p">,</span>
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
             <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
             <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
             <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -605,7 +630,10 @@ X-Auth-Token: SOME_AUTH_TOKEN</pre>
         <span class="p">{</span>
             <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3413&quot;</span><span class="p">,</span>
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.xlarge&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
             <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
             <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1235&quot;</span><span class="p">,</span>
             <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -628,8 +656,8 @@ X-Auth-Token: SOME_AUTH_TOKEN</pre>
 <div class="section" id="create-a-node-template">
 <h3>3.1.3 Create a Node Template<a class="headerlink" href="#create-a-node-template" title="Permalink to this headline">¶</a></h3>
 <dl class="post">
-<dt id="post--v0.1-node-templates">
-<tt class="descname">POST </tt><tt class="descname">/v0.1/node-templates</tt><a class="headerlink" href="#post--v0.1-node-templates" title="Permalink to this definition">¶</a></dt>
+<dt id="post--v0.2-node-templates">
+<tt class="descname">POST </tt><tt class="descname">/v0.2/node-templates</tt><a class="headerlink" href="#post--v0.2-node-templates" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 202 (Accepted)</p>
@@ -647,11 +675,14 @@ defined in section 2.1.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>POST http://eho/v0.1/node-templates</pre>
+<div class="highlight-http"><pre>POST http://eho/v0.2/node-templates</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
     <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
     <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
     <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -675,7 +706,10 @@ defined in section 2.1.</p>
 <div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3412&quot;</span><span class="p">,</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
     <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
     <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
     <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -696,8 +730,8 @@ defined in section 2.1.</p>
 <div class="section" id="retrieve-a-specific-node-template">
 <h3>3.1.4 Retrieve a specific Node Template<a class="headerlink" href="#retrieve-a-specific-node-template" title="Permalink to this headline">¶</a></h3>
 <dl class="get">
-<dt id="get--v0.1-node-templates-{node_template_id}">
-<tt class="descname">GET </tt><tt class="descname">/v0.1/node-templates/{node_template_id}</tt><a class="headerlink" href="#get--v0.1-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
+<dt id="get--v0.2-node-templates-{node_template_id}">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/node-templates/{node_template_id}</tt><a class="headerlink" href="#get--v0.2-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 200 (OK)</p>
@@ -711,7 +745,7 @@ user would receive a 403 (Forbidden) error.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET http://eho/v0.1/node-templates/3421</pre>
+<div class="highlight-http"><pre>GET http://eho/v0.2/node-templates/3421</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
@@ -721,7 +755,10 @@ user would receive a 403 (Forbidden) error.</p>
 <div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3421&quot;</span><span class="p">,</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
     <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
     <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
     <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -742,8 +779,8 @@ user would receive a 403 (Forbidden) error.</p>
 <div class="section" id="update-a-node-template">
 <h3>3.1.5 Update a Node Template<a class="headerlink" href="#update-a-node-template" title="Permalink to this headline">¶</a></h3>
 <dl class="put">
-<dt id="put--v0.1-node-templates-{node_template_id}">
-<tt class="descname">PUT </tt><tt class="descname">/v0.1/node-templates/{node_template_id}</tt><a class="headerlink" href="#put--v0.1-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
+<dt id="put--v0.2-node-templates-{node_template_id}">
+<tt class="descname">PUT </tt><tt class="descname">/v0.2/node-templates/{node_template_id}</tt><a class="headerlink" href="#put--v0.2-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 202 (Accepted)</p>
@@ -758,12 +795,15 @@ with new data.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>PUT http://eho/v0.1/node-templates/3413</pre>
+<div class="highlight-http"><pre>PUT http://eho/v0.2/node-templates/3413</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3413&quot;</span><span class="p">,</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
     <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
     <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
     <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -786,7 +826,10 @@ with new data.</p>
 <div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3413&quot;</span><span class="p">,</span>
     <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
     <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
     <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
     <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -807,8 +850,8 @@ with new data.</p>
 <div class="section" id="remove-a-node-template">
 <h3>3.1.6 Remove a Node Template<a class="headerlink" href="#remove-a-node-template" title="Permalink to this headline">¶</a></h3>
 <dl class="delete">
-<dt id="delete--v0.1-node-templates-{node_template_id}">
-<tt class="descname">DELETE </tt><tt class="descname">/v0.1/node-templates/{node_template_id}</tt><a class="headerlink" href="#delete--v0.1-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
+<dt id="delete--v0.2-node-templates-{node_template_id}">
+<tt class="descname">DELETE </tt><tt class="descname">/v0.2/node-templates/{node_template_id}</tt><a class="headerlink" href="#delete--v0.2-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 204 (No Content)</p>
@@ -824,7 +867,7 @@ or removed.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>DELETE http://eho/v0.1/node-templates/3421</pre>
+<div class="highlight-http"><pre>DELETE http://eho/v0.2/node-templates/3421</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="last highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
@@ -851,24 +894,24 @@ or removed.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>GET</td>
-<td>/v0.1/clusters</td>
+<td>/v0.2/clusters</td>
 <td>Lists summary for all clusters in EHO that are
 accessible to the tenant who submits the request</td>
 </tr>
 <tr class="row-odd"><td>POST</td>
-<td>/v0.1/clusters</td>
+<td>/v0.2/clusters</td>
 <td>Creates a new cluster</td>
 </tr>
 <tr class="row-even"><td>GET</td>
-<td>/v0.1/clusters/{cluster_id}</td>
+<td>/v0.2/clusters/{cluster_id}</td>
 <td>Lists detailed information for the specified cluster</td>
 </tr>
 <tr class="row-odd"><td>PUT</td>
-<td>/v0.1/clusters/{cluster_id}</td>
+<td>/v0.2/clusters/{cluster_id}</td>
 <td>Updates a specific cluster identified by cluster_id</td>
 </tr>
 <tr class="row-even"><td>DELETE</td>
-<td>/v0.1/clusters/{cluster_id}</td>
+<td>/v0.2/clusters/{cluster_id}</td>
 <td>Destroys a specified cluster</td>
 </tr>
 </tbody>
@@ -877,8 +920,8 @@ accessible to the tenant who submits the request</td>
 <div class="section" id="list-all-clusters">
 <h3>3.2.2 List all clusters<a class="headerlink" href="#list-all-clusters" title="Permalink to this headline">¶</a></h3>
 <dl class="get">
-<dt id="get--v0.1-clusters">
-<tt class="descname">GET </tt><tt class="descname">/v0.1/clusters</tt><a class="headerlink" href="#get--v0.1-clusters" title="Permalink to this definition">¶</a></dt>
+<dt id="get--v0.2-clusters">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/clusters</tt><a class="headerlink" href="#get--v0.2-clusters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 200 (OK)</p>
@@ -891,7 +934,7 @@ each element in the list is a &#8220;Cluster object&#8221; that described in sec
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET http://eho/v0.1/clusters</pre>
+<div class="highlight-http"><pre>GET http://eho/v0.2/clusters</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
@@ -949,8 +992,8 @@ each element in the list is a &#8220;Cluster object&#8221; that described in sec
 <div class="section" id="create-a-cluster">
 <h3>3.2.3 Create a cluster<a class="headerlink" href="#create-a-cluster" title="Permalink to this headline">¶</a></h3>
 <dl class="post">
-<dt id="post--v0.1-clusters">
-<tt class="descname">POST </tt><tt class="descname">/v0.1/clusters</tt><a class="headerlink" href="#post--v0.1-clusters" title="Permalink to this definition">¶</a></dt>
+<dt id="post--v0.2-clusters">
+<tt class="descname">POST </tt><tt class="descname">/v0.2/clusters</tt><a class="headerlink" href="#post--v0.2-clusters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 202 (Accepted)</p>
@@ -976,7 +1019,7 @@ master node type, for example, 1 JobTracker node and 1 NameNode node.</p>
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
 <blockquote>
-<div><div class="highlight-http"><pre>POST http://eho/v0.1/clusters</pre>
+<div><div class="highlight-http"><pre>POST http://eho/v0.2/clusters</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
@@ -1024,8 +1067,8 @@ master node type, for example, 1 JobTracker node and 1 NameNode node.</p>
 <div class="section" id="retrieve-a-specific-cluster">
 <h3>3.2.4 Retrieve a specific cluster<a class="headerlink" href="#retrieve-a-specific-cluster" title="Permalink to this headline">¶</a></h3>
 <dl class="get">
-<dt id="get--v0.1-clusters-{cluster-id}">
-<tt class="descname">GET </tt><tt class="descname">/v0.1/clusters/{cluster-id}</tt><a class="headerlink" href="#get--v0.1-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
+<dt id="get--v0.2-clusters-{cluster-id}">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/clusters/{cluster-id}</tt><a class="headerlink" href="#get--v0.2-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 200 (OK)</p>
@@ -1039,7 +1082,7 @@ and the cluster object doesn&#8217;t belong to user&#8217;s tenant, user would r
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET http://eho/v0.1/clusters/1234</pre>
+<div class="highlight-http"><pre>GET http://eho/v0.2/clusters/1234</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
@@ -1073,8 +1116,8 @@ and the cluster object doesn&#8217;t belong to user&#8217;s tenant, user would r
 <div class="section" id="update-a-cluster">
 <h3>3.2.5 Update a cluster<a class="headerlink" href="#update-a-cluster" title="Permalink to this headline">¶</a></h3>
 <dl class="put">
-<dt id="put--v0.1-clusters-{cluster-id}">
-<tt class="descname">PUT </tt><tt class="descname">/v0.1/clusters/{cluster-id}</tt><a class="headerlink" href="#put--v0.1-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
+<dt id="put--v0.2-clusters-{cluster-id}">
+<tt class="descname">PUT </tt><tt class="descname">/v0.2/clusters/{cluster-id}</tt><a class="headerlink" href="#put--v0.2-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 202 (Accepted)</p>
@@ -1095,7 +1138,7 @@ take a look on cluster creation operation. All needed Node Templates should be s
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>PUT http://eho/v0.1/clusters/1234</pre>
+<div class="highlight-http"><pre>PUT http://eho/v0.2/clusters/1234</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
@@ -1141,8 +1184,8 @@ take a look on cluster creation operation. All needed Node Templates should be s
 <div class="section" id="remove-a-cluster">
 <h3>3.2.6 Remove a cluster<a class="headerlink" href="#remove-a-cluster" title="Permalink to this headline">¶</a></h3>
 <dl class="delete">
-<dt id="delete--v0.1-clusters-{cluster-id}">
-<tt class="descname">DELETE </tt><tt class="descname">/v0.1/clusters/{cluster-id}</tt><a class="headerlink" href="#delete--v0.1-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
+<dt id="delete--v0.2-clusters-{cluster-id}">
+<tt class="descname">DELETE </tt><tt class="descname">/v0.2/clusters/{cluster-id}</tt><a class="headerlink" href="#delete--v0.2-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Normal Response Code: 204 (No Content)</p>
@@ -1156,7 +1199,7 @@ doesn&#8217;t belong to user&#8217;s tenant, user would receive a 403 (Forbidden
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>DELETE http://eho/v0.1/clusters/1234</pre>
+<div class="highlight-http"><pre>DELETE http://eho/v0.2/clusters/1234</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="last highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>

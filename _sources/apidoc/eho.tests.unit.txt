@@ -1,10 +1,10 @@
 unit Package
 ============
 
-:mod:`test_api_v01` Module
+:mod:`test_api_v02` Module
 --------------------------
 
-.. automodule:: eho.tests.unit.test_api_v01
+.. automodule:: eho.tests.unit.test_api_v02
     :members:
     :undoc-members:
     :show-inheritance:

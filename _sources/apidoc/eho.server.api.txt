@@ -1,10 +1,10 @@
 api Package
 ===========
 
-:mod:`v01` Module
+:mod:`v02` Module
 -----------------
 
-.. automodule:: eho.server.api.v01
+.. automodule:: eho.server.api.v02
     :members:
     :undoc-members:
     :show-inheritance:
