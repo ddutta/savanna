@@ -1,4 +1,4 @@
-from eho.server.service import api
+from eho.server.service import api, validation
 
 from eho.server.utils.api import Rest, render, abort_and_log, request_data
 
@@ -60,8 +60,9 @@ def clusters_list():
 
 @rest.post('/clusters')
 def clusters_create():
-    data = request_data()
     try:
+        data = request_data()
+        validation.validate_cluster_create(data)
         return render(api.create_cluster(data).dict)
     except Exception, e:
         abort_and_log(500, "Exception while adding new Cluster: %s" % e)
