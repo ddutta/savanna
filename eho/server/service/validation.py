@@ -1,5 +1,4 @@
 def validate_cluster_create(values):
-
     #Reguired fields checks
     check_required_field(values, 'name')
     check_required_field(values, 'base_image_id')
@@ -9,7 +8,6 @@ def validate_cluster_create(values):
     #Non empty fields checking
     check_not_empty_fields(values)
     check_not_empty_fields(values['templates'])
-
 
 
 def check_required_field(values, field):
