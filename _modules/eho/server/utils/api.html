@@ -86,6 +86,7 @@
 <span class="kn">import</span> <span class="nn">mimetypes</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
 
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">abort</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">Response</span>
 <span class="kn">from</span> <span class="nn">werkzeug.datastructures</span> <span class="kn">import</span> <span class="n">MIMEAccept</span>
@@ -188,9 +189,13 @@
     <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="abort_and_log"><a class="viewcode-back" href="../../../../apidoc/eho.server.utils.html#eho.server.utils.api.abort_and_log">[docs]</a><span class="k">def</span> <span class="nf">abort_and_log</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="n">descr</span><span class="p">):</span>
+<div class="viewcode-block" id="abort_and_log"><a class="viewcode-back" href="../../../../apidoc/eho.server.utils.html#eho.server.utils.api.abort_and_log">[docs]</a><span class="k">def</span> <span class="nf">abort_and_log</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="n">descr</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Request aborted with status code </span><span class="si">%s</span><span class="s"> and message &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span><span class="p">,</span>
                   <span class="n">status_code</span><span class="p">,</span> <span class="n">descr</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">exc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+
     <span class="n">abort</span><span class="p">(</span><span class="n">status_code</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">descr</span><span class="p">)</span></div>
 </pre></div>
 

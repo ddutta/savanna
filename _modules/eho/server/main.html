@@ -87,6 +87,7 @@
 
 <span class="kn">from</span> <span class="nn">eventlet</span> <span class="kn">import</span> <span class="n">monkey_patch</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">keystoneclient.middleware.auth_token</span> <span class="kn">import</span> <span class="n">filter_factory</span>
 <span class="kn">from</span> <span class="nn">werkzeug.exceptions</span> <span class="kn">import</span> <span class="n">default_exceptions</span>
 <span class="kn">from</span> <span class="nn">werkzeug.exceptions</span> <span class="kn">import</span> <span class="n">HTTPException</span>
 
@@ -149,6 +150,16 @@
 
     <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">default_exceptions</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span>
         <span class="n">app</span><span class="o">.</span><span class="n">error_handler_spec</span><span class="p">[</span><span class="bp">None</span><span class="p">][</span><span class="n">code</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_json_error</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span> <span class="o">=</span> <span class="n">filter_factory</span><span class="p">(</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+        <span class="n">auth_host</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;OS_AUTH_HOST&#39;</span><span class="p">],</span>
+        <span class="n">auth_port</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;OS_AUTH_PORT&#39;</span><span class="p">],</span>
+        <span class="n">auth_protocol</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;OS_AUTH_PROTOCOL&#39;</span><span class="p">],</span>
+        <span class="n">admin_user</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;OS_ADMIN_USER&#39;</span><span class="p">],</span>
+        <span class="n">admin_password</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;OS_ADMIN_PASSWORD&#39;</span><span class="p">],</span>
+        <span class="n">admin_tenant</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;OS_ADMIN_TENANT&#39;</span><span class="p">]</span>
+    <span class="p">)(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi_app</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">app</span></div>
 </pre></div>
