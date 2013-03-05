@@ -1,0 +1,10 @@
+Openstack Dashboard pages for EHO
+=================================
+
+Next, you can see a lot of screenshots of the working prototype.
+
+.. figure:: images/openstack-interop.png
+    :scale: 50 %
+    :alt: map to buried treasure
+
+    This is the caption of the figure (a simple paragraph).

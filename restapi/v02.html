@@ -1,0 +1,1237 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>EHO REST API v0.2 &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/tweaks.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/jquery.tweet.js"></script>
+    <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="../index.html" />
+    <link rel="prev" title="Elastic Hadoop on OpenStack Roadmap" href="../roadmap.html" />
+    <script type='text/javascript'>
+        /*$(document).ready(function(){
+            $("#twitter_feed").tweet({
+                username: "openstack",
+                query: "from:openstack",
+                avatar_size: 32,
+                count: 4,
+                loading_text: "loading tweets..."
+            });
+        });*/
+    </script>
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../roadmap.html" title="Elastic Hadoop on OpenStack Roadmap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">EHO REST API v0.2</a><ul>
+<li><a class="reference internal" href="#general-api-information">1 General API information</a><ul>
+<li><a class="reference internal" href="#authentication-and-authorization">1.1 Authentication and Authorization</a></li>
+<li><a class="reference internal" href="#request-response-types">1.2 Request / Response Types</a></li>
+<li><a class="reference internal" href="#filtering-and-column-selection">1.3 Filtering and Column Selection</a></li>
+<li><a class="reference internal" href="#faults">1.4 Faults</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#object-model">2 Object Model</a><ul>
+<li><a class="reference internal" href="#node-template-object">2.1 Node Template object</a></li>
+<li><a class="reference internal" href="#cluster-create-update-object">2.2 Cluster Create/Update object</a></li>
+<li><a class="reference internal" href="#cluster-object">2.3 Cluster object</a></li>
+<li><a class="reference internal" href="#node-object">2.4 Node object</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-operations">3 API operations</a><ul>
+<li><a class="reference internal" href="#node-templates-ops">3.1 Node Templates ops</a></li>
+<li><a class="reference internal" href="#list-all-node-templates">3.1.2 List all Node Templates</a></li>
+<li><a class="reference internal" href="#create-a-node-template">3.1.3 Create a Node Template</a></li>
+<li><a class="reference internal" href="#retrieve-a-specific-node-template">3.1.4 Retrieve a specific Node Template</a></li>
+<li><a class="reference internal" href="#update-a-node-template">3.1.5 Update a Node Template</a></li>
+<li><a class="reference internal" href="#remove-a-node-template">3.1.6 Remove a Node Template</a></li>
+<li><a class="reference internal" href="#clusters-ops">3.2 Clusters ops</a></li>
+<li><a class="reference internal" href="#list-all-clusters">3.2.2 List all clusters</a></li>
+<li><a class="reference internal" href="#create-a-cluster">3.2.3 Create a cluster</a></li>
+<li><a class="reference internal" href="#retrieve-a-specific-cluster">3.2.4 Retrieve a specific cluster</a></li>
+<li><a class="reference internal" href="#update-a-cluster">3.2.5 Update a cluster</a></li>
+<li><a class="reference internal" href="#remove-a-cluster">3.2.6 Remove a cluster</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../roadmap.html"
+                                  title="previous chapter">Elastic Hadoop on OpenStack Roadmap</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/restapi/v02.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="eho-rest-api-v0-2">
+<h1>EHO REST API v0.2<a class="headerlink" href="#eho-rest-api-v0-2" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-api-information">
+<h2>1 General API information<a class="headerlink" href="#general-api-information" title="Permalink to this headline">¶</a></h2>
+<p>This section contains base info about the EHO REST API design.</p>
+<div class="section" id="authentication-and-authorization">
+<h3>1.1 Authentication and Authorization<a class="headerlink" href="#authentication-and-authorization" title="Permalink to this headline">¶</a></h3>
+<p>The EHO API uses the Keystone Identity Service as the default authentication service.
+When Keystone is enabled, users who submit requests to the EHO service must provide an authentication token
+in X-Auth-Token request header. User could obtain the token by authenticating to the Keystone endpoint.
+For more information about Keystone, see the OpenStack Identity Developer Guide.</p>
+<p>Each of the EHO objects described in section 2 (&#8216;Object Model&#8217;) belongs to some tenant,
+which is determined by its creator.</p>
+<p>Regular users are allowed to perform &#8216;create&#8217;, &#8216;read&#8217; and &#8216;list&#8217; operations only in the tenants they have access to.
+They can also perform &#8216;update&#8217; and &#8216;delete&#8217; operations, but only on the objects they created.</p>
+<p>Admin users could perform any operation in any tenant and on any object.</p>
+<p>Whenever a user wants to perform an operation in a tenant, which is not his default,
+the user must specify &#8216;tenant_id&#8217; attribute for the object. Since admin user does not have a default tenant,
+he must specify &#8216;tenant_id&#8217; for every operation he performs.</p>
+<p>In current EHO design, all authenticated users can perform all operations.
+In the future we are planning to add some RBAC or policy-based rules to manage privileges in EHO.</p>
+</div>
+<div class="section" id="request-response-types">
+<h3>1.2 Request / Response Types<a class="headerlink" href="#request-response-types" title="Permalink to this headline">¶</a></h3>
+<p>The EHO API supports the JSON data serialization format.
+This means that for requests that contain a body, the Content-Type header must be set to the MIME type value
+&#8220;application/json&#8221;. Also, clients should accept JSON serialized responses by specifying the Accept header
+with the MIME type value &#8220;application/json&#8221; or adding &#8221;.json&#8221; extension to the resource name.
+The default response format is &#8220;application/json&#8221; if the client omits to specify an Accept header
+or append the &#8221;.json&#8221; extension in the URL path.</p>
+<p>Example:</p>
+<div class="highlight-http"><pre>GET /v0.2/clusters.json</pre>
+</div>
+<p>or</p>
+<div class="highlight-http"><pre>GET /v0.2/clusters
+Accept: application/json</pre>
+</div>
+</div>
+<div class="section" id="filtering-and-column-selection">
+<h3>1.3 Filtering and Column Selection<a class="headerlink" href="#filtering-and-column-selection" title="Permalink to this headline">¶</a></h3>
+<p>(It&#8217;s not implemented yet)</p>
+<p>The EHO API supports filtering based on all top level attributes of a resource.
+Filters are applicable to all list requests.</p>
+<p>For example, the following request returns all clusters named &#8216;foobar&#8217;:</p>
+<div class="highlight-http"><pre>GET /v0.2/clusters?name=foobar</pre>
+</div>
+<p>When you specify multiple filters, the EHO API returns only objects that meet all filtering criteria.
+The operation applies an AND condition among the filters, for example:</p>
+<div class="highlight-http"><pre>GET /v0.2/clusters?name=foo1&amp;some_attr=some_value</pre>
+</div>
+<p>Currently, there is no OR mechanism for filtering. Alternatively, you can issue a distinct request
+for each filter and build a response set from the received responses on the client-side.</p>
+<p>By default, the EHO service returns all attributes for any show or list call.
+The EHO API has a mechanism to limit the set of attributes returned.
+You can use the fields query parameter to control the attributes returned from the EHO API.</p>
+<p>For example, the following request returns only id, name and status for each cluster:</p>
+<div class="highlight-http"><pre>GET /v0.2/clusters.json?fields=id&amp;fields=name&amp;fields=status</pre>
+</div>
+<p>Such selector could be useful for displaying some info about running clusters on GUI.</p>
+<p>Filtering and column selection features could be used together too.</p>
+</div>
+<div class="section" id="faults">
+<h3>1.4 Faults<a class="headerlink" href="#faults" title="Permalink to this headline">¶</a></h3>
+<p>The EHO API returns an error response if a failure occurs while processing a request.
+EHO uses only standard HTTP error codes. 4xx errors indicate problems in the particular
+request being sent from the client and 5xx errors indicate server-side problems.</p>
+<p>Here we can add table with all used error codes.</p>
+<p>The response body will contain richer information about the cause of the error.
+An error response follows the format illustrated by the following example:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">409</span> <span class="ne">Conflict</span>
+<span class="na">Content-type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Content-length</span><span class="o">:</span> <span class="l">XX</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error_code&quot;</span><span class="p">:</span> <span class="mi">409</span><span class="p">,</span>
+    <span class="nt">&quot;error_name&quot;</span><span class="p">:</span> <span class="s2">&quot;CLUSTER_EXISTS&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;error_message&quot;</span><span class="p">:</span> <span class="s2">&quot;Cluster with name &#39;cluster #123&#39; already exists&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The &#8216;error_code&#8217; attribute equals to HTTP response code. The &#8216;error_name&#8217; attribute
+indicates generic error type without any concrete ids or names, etc.
+And the last attribute is &#8216;error_message&#8217; that contains human readable error description.</p>
+</div>
+</div>
+<div class="section" id="object-model">
+<h2>2 Object Model<a class="headerlink" href="#object-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="node-template-object">
+<h3>2.1 Node Template object<a class="headerlink" href="#node-template-object" title="Permalink to this headline">¶</a></h3>
+<p><strong>2.1.1 Description</strong></p>
+<p>Node Template object is an abstraction for storing VM hardware parameters (vCPU, RAM, HDD, etc.), VM node type (JobTracker+NameNode, JobTracker+DataNode, JobTracker only, etc.) and some Hadoop-relative configurations (processes heap sizes, # of MapReduce tasks per node, etc.).</p>
+<p>Expected node types:</p>
+<p>JT+NN - node with both JobTracker and NameNode running;</p>
+<p>JT - node with only JobTracker running;</p>
+<p>NN - node with only NameNode running;</p>
+<p>TT+DN - node with both TaskTracker and DataNode running;</p>
+<p>TT - node with only TaskTracker running;</p>
+<p>DN - node with only DataNode running.</p>
+<p>All node types are predefined and new types might be added in the future.</p>
+<p><strong>2.1.2 Object Fields</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>[required for update/get] string</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>name</td>
+<td>string</td>
+<td>A name of the node template</td>
+</tr>
+<tr class="row-even"><td>node_type</td>
+<td>object</td>
+<td>NodeType info</td>
+</tr>
+<tr class="row-odd"><td>node_type.name</td>
+<td>string</td>
+<td>Name of the node type</td>
+</tr>
+<tr class="row-even"><td>node_type.processes</td>
+<td>array of strings</td>
+<td>List of process names that will be executed on node</td>
+</tr>
+<tr class="row-odd"><td>tenant_id</td>
+<td>string</td>
+<td>An id of the OpenStack&#8217;s tenant</td>
+</tr>
+<tr class="row-even"><td>flavor_id</td>
+<td>string</td>
+<td>An id of the OpenStack&#8217;s flavor</td>
+</tr>
+<tr class="row-odd"><td>job_tracker</td>
+<td>section</td>
+<td>Section with job_tracker conf</td>
+</tr>
+<tr class="row-even"><td>job_tracker.heap_size</td>
+<td>[JT required] int</td>
+<td>Job Tracker heap size in MB</td>
+</tr>
+<tr class="row-odd"><td>name_node</td>
+<td>section</td>
+<td>Section with name_node conf</td>
+</tr>
+<tr class="row-even"><td>name_node.heap_size</td>
+<td>[NN required] int</td>
+<td>Name Node heap size in MB</td>
+</tr>
+<tr class="row-odd"><td>task_tracker</td>
+<td>section</td>
+<td>Section with task_tracker conf</td>
+</tr>
+<tr class="row-even"><td>task_tracker.heap_size</td>
+<td>[TT required] int</td>
+<td>Task Tracker heap size in MB</td>
+</tr>
+<tr class="row-odd"><td>task_tracker.max_map_tasks</td>
+<td>[TT optional] int</td>
+<td>Max number of map tasks per task tracker</td>
+</tr>
+<tr class="row-even"><td>task_tracker.max_reduce_tasks</td>
+<td>[TT optional] int</td>
+<td>Max number of reduce tasks per task tracker</td>
+</tr>
+<tr class="row-odd"><td>task_tracker.task_heap_size</td>
+<td>[TT required] int</td>
+<td>Task (map or reduce) heap size in MB</td>
+</tr>
+<tr class="row-even"><td>data_node</td>
+<td>section</td>
+<td>Section with data_node-related configurations</td>
+</tr>
+<tr class="row-odd"><td>data_node.heap_size</td>
+<td>[DN required] int</td>
+<td>Data Node heap size in megabytes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2.1.3 Example</strong></p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3412&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;taskTracker_and_dataNode.medium&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
+        <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">640</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cluster-create-update-object">
+<h3>2.2 Cluster Create/Update object<a class="headerlink" href="#cluster-create-update-object" title="Permalink to this headline">¶</a></h3>
+<p><strong>2.2.1 Description</strong></p>
+<p>This object is used to create and update existing clusters.
+It contains cluster&#8217;s name and &#8216;node_templates&#8217; section that provides information about number of instances of
+some Node Templates that we want to use. Additionally, it includes the &#8216;base_image&#8217; id to specify image
+that should be the base for VMs creation. Such image should be prepared by installing Hadoop with special layout.
+The &#8216;id&#8217; field should not be specified during cluster creation, but it should be specified while updating
+the existing cluster.</p>
+<p><strong>2.2.2 Object fields</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>[required for update] string</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>name</td>
+<td>string</td>
+<td>A name of the cluster</td>
+</tr>
+<tr class="row-even"><td>tenant_id</td>
+<td>string</td>
+<td>An id of the OpenStack&#8217;s tenant</td>
+</tr>
+<tr class="row-odd"><td>node_templates</td>
+<td>map (object)</td>
+<td>Map Node Template -&gt; count</td>
+</tr>
+<tr class="row-even"><td>base_image_id</td>
+<td>string</td>
+<td>An id of the image stored in Glance that will be
+used for VM creation (the image should have Hadoop
+installed with the specific layout)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2.2.3 Example</strong></p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster #123&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;jobTracker_and_nameNode.medium&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;taskTracker_and_dataNode.medium&quot;</span><span class="p">:</span> <span class="mi">4</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;base_image_id&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cluster-object">
+<h3>2.3 Cluster object<a class="headerlink" href="#cluster-object" title="Permalink to this headline">¶</a></h3>
+<p><strong>2.3.1 Description</strong></p>
+<p>This object used in REST API responses to return information about clusters.</p>
+<p><strong>2.3.2 Object fields</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>[required for update] string</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>tenant_id</td>
+<td>string</td>
+<td>An id of the OpenStack&#8217;s tenant</td>
+</tr>
+<tr class="row-even"><td>name</td>
+<td>string</td>
+<td>A name of the cluster</td>
+</tr>
+<tr class="row-odd"><td>node_templates</td>
+<td>map (object)</td>
+<td>Map Node Template -&gt; count</td>
+</tr>
+<tr class="row-even"><td>base_image_id</td>
+<td>string</td>
+<td>An id of the image stored in Glance that will be
+used for VM creation (the image should have Hadoop
+installed with the specific layout)</td>
+</tr>
+<tr class="row-odd"><td>status</td>
+<td>string</td>
+<td>Status of the current cluster</td>
+</tr>
+<tr class="row-even"><td>nodes</td>
+<td>objects array</td>
+<td>List of vms used by current Hadoop cluster</td>
+</tr>
+<tr class="row-odd"><td>service_urls</td>
+<td>section</td>
+<td>Section with urls for installed services</td>
+</tr>
+<tr class="row-even"><td>service_urls.job_tracker</td>
+<td>string</td>
+<td>Url for JobTracker</td>
+</tr>
+<tr class="row-odd"><td>service_urls.name_node</td>
+<td>string</td>
+<td>Url for NameNode</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2.3.3 Example</strong></p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster #123&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;jobTracker_and_nameNode.medium&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;taskTracker_and_dataNode.medium&quot;</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;online&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;service_urls&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;job_tracker&quot;</span><span class="p">:</span> <span class="s2">&quot;http://10.0.1.10:50030&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name_node&quot;</span><span class="p">:</span> <span class="s2">&quot;http://10.0.1.10:50070&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="node-object">
+<h3>2.4 Node object<a class="headerlink" href="#node-object" title="Permalink to this headline">¶</a></h3>
+<p><strong>2.4.1 Description</strong></p>
+<p>This object is used in REST API responses to return information about cluster&#8217;s nodes.
+In fact, a node is a virtual machine managed by OpenStack Nova.</p>
+<p><strong>2.4.2 Object fields</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>vm_id</td>
+<td>string</td>
+<td>VM id in OpenStack cluster</td>
+</tr>
+<tr class="row-odd"><td>node_template</td>
+<td>object</td>
+<td>Node Template used to create this node</td>
+</tr>
+<tr class="row-even"><td>node_template.id</td>
+<td>string</td>
+<td>Node Template id used to create this node</td>
+</tr>
+<tr class="row-odd"><td>node_template.name</td>
+<td>string</td>
+<td>Node Template name used to create this node</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2.4.3 Example</strong></p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;vm_id&quot;</span><span class="p">:</span> <span class="s2">&quot;dee040e1-f58f-4d54-846b-fec8e2bd9b21&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_template&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;123456&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jt_nn.xlarge&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="api-operations">
+<h2>3 API operations<a class="headerlink" href="#api-operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="node-templates-ops">
+<h3>3.1 Node Templates ops<a class="headerlink" href="#node-templates-ops" title="Permalink to this headline">¶</a></h3>
+<p><strong>Summary</strong></p>
+<p>Use the following APIs to manage templates:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Verb</th>
+<th class="head">URI</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>/v0.2/node-templates</td>
+<td>Lists summary for all Node Templates in EHO that are
+accessible to the tenant who submits the request</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>/v0.2/node-templates</td>
+<td>Creates a new Node Template</td>
+</tr>
+<tr class="row-even"><td>GET</td>
+<td>/v0.2/node-templates/{node_template_id}</td>
+<td>Lists information for the specified Node Template</td>
+</tr>
+<tr class="row-odd"><td>PUT</td>
+<td>/v0.2/node-templates/{node_template_id}</td>
+<td>Updates a specific Node Template identified by
+node_template_id
+(only unused Node Templates could be modified)</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>/v0.2/node-templates/{node_template_id}</td>
+<td>Destroyed a specified Node Template
+(only unused Node Templates could be removed)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="list-all-node-templates">
+<h3>3.1.2 List all Node Templates<a class="headerlink" href="#list-all-node-templates" title="Permalink to this headline">¶</a></h3>
+<dl class="get">
+<dt id="get--v0.2-node-templates">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/node-templates</tt><a class="headerlink" href="#get--v0.2-node-templates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 200 (OK)</p>
+<p>Errors: none</p>
+<p>This operations returns the list of all Node Templates associated with your tenant.
+If you have an admin role, then this request returns all the Node Templates of all tenants.</p>
+<p>This operation does not require a request body.</p>
+<p>This operation returns a response body. It returns a (potentially empty) list, each element in the list is a
+&#8220;Node Template object&#8221; that described in section 2.1.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>GET /v0.2/node-templates
+Accept: application/json
+X-Auth-Token: SOME_AUTH_TOKEN</pre>
+</div>
+<p><strong>response</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">XX</span>
+</pre></div>
+</div>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3412&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
+                <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">640</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3413&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.xlarge&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1235&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">2048</span><span class="p">,</span>
+                <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">2048</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">2048</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="create-a-node-template">
+<h3>3.1.3 Create a Node Template<a class="headerlink" href="#create-a-node-template" title="Permalink to this headline">¶</a></h3>
+<dl class="post">
+<dt id="post--v0.2-node-templates">
+<tt class="descname">POST </tt><tt class="descname">/v0.2/node-templates</tt><a class="headerlink" href="#post--v0.2-node-templates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 202 (Accepted)</p>
+<p>Errors:</p>
+<p>400, NODE_TEMPLATE_EXISTS, &#8220;Node Template with name &#8216;cluster #123&#8217; already exists&#8221;</p>
+<p>400, WRONG_PARAMETER_FORMAT, &#8220;Some input field is specified incorrectly or is missing&#8221;</p>
+<p>This operation creates a new Node Template from the parameters specified in request object.
+All parameters has been described in section 2.1.</p>
+<p>Users with an admin role can create Node Templates on behalf of other tenants by specifying a tenant_id parameter
+different than their own. The tenant_id attribute is only required if the caller has an admin role and wants to
+create a Node Template for another tenant.</p>
+<p>This operation requires request body.</p>
+<p>This operation returns a response body. It contains newly created node template as &#8220;Node Template object&#8221;,
+defined in section 2.1.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>POST http://eho/v0.2/node-templates</pre>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
+        <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">640</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>response</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">Accepted</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">XX</span>
+</pre></div>
+</div>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3412&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
+        <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">640</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="retrieve-a-specific-node-template">
+<h3>3.1.4 Retrieve a specific Node Template<a class="headerlink" href="#retrieve-a-specific-node-template" title="Permalink to this headline">¶</a></h3>
+<dl class="get">
+<dt id="get--v0.2-node-templates-{node_template_id}">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/node-templates/{node_template_id}</tt><a class="headerlink" href="#get--v0.2-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 200 (OK)</p>
+<p>Errors:</p>
+<p>404, NODE_TEMPLATE_NOT_FOUND, &#8220;Node Template with such a name does not exist&#8221;</p>
+<p>This operation returns a Node Template object identified by node_template_id.
+If the user is not an admin, and the Node Template object doesn&#8217;t belong to user&#8217;s tenant,
+user would receive a 403 (Forbidden) error.</p>
+<p>This operation does not require a request body.</p>
+<p>This operation returns a response body. It contains node template as &#8220;Node Template object&#8221;, defined in section 2.1.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>GET http://eho/v0.2/node-templates/3421</pre>
+</div>
+<p><strong>response</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3421&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
+        <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">640</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="update-a-node-template">
+<h3>3.1.5 Update a Node Template<a class="headerlink" href="#update-a-node-template" title="Permalink to this headline">¶</a></h3>
+<dl class="put">
+<dt id="put--v0.2-node-templates-{node_template_id}">
+<tt class="descname">PUT </tt><tt class="descname">/v0.2/node-templates/{node_template_id}</tt><a class="headerlink" href="#put--v0.2-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 202 (Accepted)</p>
+<p>Errors:</p>
+<p>400, WRONG_PARAMETER_FORMAT, &#8220;Some input field is specified incorrectly or is missing&#8221;</p>
+<p>This operation updates the attributes of the node template identified by node_template_id.
+All attributes should be specified while updating resource. Only node templates that are not in use could be updated.
+So, if any cluster used any node template than such node template could not be modified or removed.</p>
+<p>This operation requires request body. It should contains the full Node Template object (defined in section 2.1)
+with new data.</p>
+<p>This operation returns response body. It contains updated Node Template object defined in section 2.1.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>PUT http://eho/v0.2/node-templates/3413</pre>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3413&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">402</span><span class="p">,</span>
+        <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">500</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">402</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>response</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">Accepted</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3413&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tt_dn.medium&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">402</span><span class="p">,</span>
+        <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nt">&quot;max_reduce_tasks&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;task_heap_size&quot;</span><span class="p">:</span> <span class="mi">500</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;data_node&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">402</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="remove-a-node-template">
+<h3>3.1.6 Remove a Node Template<a class="headerlink" href="#remove-a-node-template" title="Permalink to this headline">¶</a></h3>
+<dl class="delete">
+<dt id="delete--v0.2-node-templates-{node_template_id}">
+<tt class="descname">DELETE </tt><tt class="descname">/v0.2/node-templates/{node_template_id}</tt><a class="headerlink" href="#delete--v0.2-node-templates-{node_template_id}" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 204 (No Content)</p>
+<p>Errors:</p>
+<p>404, NODE_TEMPLATE_NOT_FOUND, &#8220;Node Template with name &#8216;node template #1&#8217; does not exist&#8221;</p>
+<p>This operation removes the specified Node Template and its associated resources.
+Any and all data is immediately purged and is not recoverable. If the user is not an admin, and the Node Template
+object doesn&#8217;t belong to user&#8217;s tenant, user would receive a 403 (Forbidden) error. Only Node Templates that are
+not in use could be removed. So, if any cluster used any Node Template than such Node Template could not be modified
+or removed.</p>
+<p>This operation does not require a request body.</p>
+<p>This operation does not return a response body.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>DELETE http://eho/v0.2/node-templates/3421</pre>
+</div>
+<p><strong>response</strong></p>
+<div class="last highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="clusters-ops">
+<h3>3.2 Clusters ops<a class="headerlink" href="#clusters-ops" title="Permalink to this headline">¶</a></h3>
+<p><strong>Summary</strong></p>
+<p>Use the following APIs to manage clusters:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="33%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Verb</th>
+<th class="head">URI</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>/v0.2/clusters</td>
+<td>Lists summary for all clusters in EHO that are
+accessible to the tenant who submits the request</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>/v0.2/clusters</td>
+<td>Creates a new cluster</td>
+</tr>
+<tr class="row-even"><td>GET</td>
+<td>/v0.2/clusters/{cluster_id}</td>
+<td>Lists detailed information for the specified cluster</td>
+</tr>
+<tr class="row-odd"><td>PUT</td>
+<td>/v0.2/clusters/{cluster_id}</td>
+<td>Updates a specific cluster identified by cluster_id</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>/v0.2/clusters/{cluster_id}</td>
+<td>Destroys a specified cluster</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="list-all-clusters">
+<h3>3.2.2 List all clusters<a class="headerlink" href="#list-all-clusters" title="Permalink to this headline">¶</a></h3>
+<dl class="get">
+<dt id="get--v0.2-clusters">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/clusters</tt><a class="headerlink" href="#get--v0.2-clusters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 200 (OK)</p>
+<p>Errors: none</p>
+<p>This operations returns the list of all clusters associated with your tenant.
+If you have an admin role, then this request returns all the clusters of all tenants.</p>
+<p>This operation does not require a request body.</p>
+<p>This operation returns a response body. It returns a (potentially empty) list,
+each element in the list is a &#8220;Cluster object&#8221; that described in section 2.2.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>GET http://eho/v0.2/clusters</pre>
+</div>
+<p><strong>response</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;clusters&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster #123&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;jobTracker_and_nameNode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="nt">&quot;taskTracker_and_dataNode&quot;</span><span class="p">:</span> <span class="mi">10</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;online&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;service_urls&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;job_tracker&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12345&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name_node&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12346&quot;</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;&lt;Node object&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&lt;Node object&gt;&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1235&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster #124&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;jobTracker&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="nt">&quot;nameNode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="nt">&quot;taskTracker_and_dataNode&quot;</span><span class="p">:</span> <span class="mi">10</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;online&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;service_urls&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;job_tracker&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12345&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;name_node&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12346&quot;</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;&lt;Node object&gt;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&lt;Node object&gt;&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+     <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="create-a-cluster">
+<h3>3.2.3 Create a cluster<a class="headerlink" href="#create-a-cluster" title="Permalink to this headline">¶</a></h3>
+<dl class="post">
+<dt id="post--v0.2-clusters">
+<tt class="descname">POST </tt><tt class="descname">/v0.2/clusters</tt><a class="headerlink" href="#post--v0.2-clusters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 202 (Accepted)</p>
+<p>Errors:</p>
+<blockquote>
+<div><p>400, CLUSTER_EXISTS, &#8220;Cluster with name &#8216;cluster #123&#8217; already exists&#8221;</p>
+<p>400, WRONG_PARAMETER_FORMAT, &#8220;Some input field is specified incorrectly or is missing&#8221;</p>
+<p>400, WRONG_TOPOLOGY_CONFIG, &#8220;Some required cluster components is missing or conflict between components detected&#8221;</p>
+</div></blockquote>
+<p>This operation creates a new cluster from the parameters specified in request object.
+All parameters has been described in section 2.2.</p>
+<p>Users with an admin role can create clusters on behalf of other tenants by specifying a tenant_id parameter
+different than their own. The tenant_id attribute is only required if the caller has an admin role and wants
+to create a cluster for another tenant.</p>
+<p>This operation requires request body.</p>
+<p>This operation returns a response body. It contains newly created Node Template as &#8220;Cluster Create/Update object&#8221;,
+defined in section 2.2.</p>
+<p>The main idea is to specify number of required instances of some Node Template.
+It means that if you want 10 nodes with both TaskTracker and DataNode than you should specify Node Template
+with type like &#8220;TT+NN&#8221; and specify number of instances 10. Number of master nodes should be equals 1 for each
+master node type, for example, 1 JobTracker node and 1 NameNode node.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<blockquote>
+<div><div class="highlight-http"><pre>POST http://eho/v0.2/clusters</pre>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster #123&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;jobTracker_and_nameNode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;taskTracker_and_dataNode&quot;</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>response</strong></p>
+<blockquote class="last">
+<div><div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">Accepted</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster #123&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;jobTracker_and_nameNode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;taskTracker_and_dataNode&quot;</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;online&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;service_urls&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;job_tracker&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12345&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name_node&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12346&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+</div>
+<div class="section" id="retrieve-a-specific-cluster">
+<h3>3.2.4 Retrieve a specific cluster<a class="headerlink" href="#retrieve-a-specific-cluster" title="Permalink to this headline">¶</a></h3>
+<dl class="get">
+<dt id="get--v0.2-clusters-{cluster-id}">
+<tt class="descname">GET </tt><tt class="descname">/v0.2/clusters/{cluster-id}</tt><a class="headerlink" href="#get--v0.2-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 200 (OK)</p>
+<p>Errors:</p>
+<blockquote>
+<div>404, CLUSTER_NOT_FOUND, &#8220;Cluster with name &#8216;cluster#123&#8217; does not exists&#8221;</div></blockquote>
+<p>This operation returns a cluster object identified by cluster_id. If the user is not an admin,
+and the cluster object doesn&#8217;t belong to user&#8217;s tenant, user would receive a 403 (Forbidden) error.</p>
+<p>This operation does not require a request body.</p>
+<p>This operation returns a response body. It contains cluster as &#8220;Cluster object&#8221;, defined in section 2.2.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>GET http://eho/v0.2/clusters/1234</pre>
+</div>
+<p><strong>response</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster #123&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;jobTracker_and_nameNode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;taskTracker_and_dataNode&quot;</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;online&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;service_urls&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;job_tracker&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12345&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name_node&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12346&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="update-a-cluster">
+<h3>3.2.5 Update a cluster<a class="headerlink" href="#update-a-cluster" title="Permalink to this headline">¶</a></h3>
+<dl class="put">
+<dt id="put--v0.2-clusters-{cluster-id}">
+<tt class="descname">PUT </tt><tt class="descname">/v0.2/clusters/{cluster-id}</tt><a class="headerlink" href="#put--v0.2-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 202 (Accepted)</p>
+<p>Errors:</p>
+<blockquote>
+<div><p>400, CLUSTER_EXISTS, &#8220;Cluster with name &#8216;cluster #123&#8217; already exists&#8221;</p>
+<p>400, WRONG_PARAMETER_FORMAT, &#8220;Some input field is specified incorrectly or is missing&#8221;</p>
+<p>400, WRONG_TOPOLOGY_CONFIG, &#8220;Some required cluster components is missing or conflict between components detected&#8221;</p>
+</div></blockquote>
+<p>This operation updates the attributes of the cluster identified by cluster_id.
+All attributes should be specified while updating resource.</p>
+<p>This operation requires request body. It should contains the full &#8220;Cluster Create/Update object&#8221;
+(defined in section 2.2)  with new data.</p>
+<p>This operation returns response body. It contains updated cluster object defined in section 2.2.</p>
+<p>This operation should be used for adding and removing nodes. For more information, please,
+take a look on cluster creation operation. All needed Node Templates should be specified while scaling cluster
+(not only new Node Templates), all missed Node Templates would be removed from cluster.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>PUT http://eho/v0.2/clusters/1234</pre>
+</div>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;the new cluster #123&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;jobTracker_and_nameNode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;taskTracker_and_dataNode&quot;</span><span class="p">:</span> <span class="mi">20</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>response</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">Accepted</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;23451&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;the new cluster #123&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;node_templates&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;jobTracker_and_nameNode&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;taskTracker_and_dataNode&quot;</span><span class="p">:</span> <span class="mi">20</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;base_image&quot;</span><span class="p">:</span> <span class="s2">&quot;image #1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;online&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;service_urls&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;job_tracker&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12345&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name_node&quot;</span><span class="p">:</span> <span class="s2">&quot;10.0.1.10:12346&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&lt;Node object&gt;&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="remove-a-cluster">
+<h3>3.2.6 Remove a cluster<a class="headerlink" href="#remove-a-cluster" title="Permalink to this headline">¶</a></h3>
+<dl class="delete">
+<dt id="delete--v0.2-clusters-{cluster-id}">
+<tt class="descname">DELETE </tt><tt class="descname">/v0.2/clusters/{cluster-id}</tt><a class="headerlink" href="#delete--v0.2-clusters-{cluster-id}" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Normal Response Code: 204 (No Content)</p>
+<p>Errors:</p>
+<p>404, CLUSTER_NOT_FOUND, &#8220;Cluster with such name does not exist&#8221;</p>
+<p>This operation removes the specified cluster (identified by cluster_id) and its associated resources.
+Any and all data is immediately purged and is not recoverable. If the user is not an admin, and the cluster object
+doesn&#8217;t belong to user&#8217;s tenant, user would receive a 403 (Forbidden) error.</p>
+<p>This operation does not require a request body.</p>
+<p>This operation does not return a response body.</p>
+<dl class="docutils">
+<dt><strong>Example</strong>:</dt>
+<dd><p class="first"><strong>request</strong></p>
+<div class="highlight-http"><pre>DELETE http://eho/v0.2/clusters/1234</pre>
+</div>
+<p><strong>response</strong></p>
+<div class="last highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../roadmap.html" title="Elastic Hadoop on OpenStack Roadmap"
+             >previous</a> |</li>
+        <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Mirantis Inc..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
