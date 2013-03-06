@@ -1,4 +1,8 @@
-class NotExistedNodeTypeException(Exception):
+class ClusterOperationException(Exception):
+    pass
+
+
+class NotExistedNodeTypeException(ClusterOperationException):
     def __init__(self, value):
         self.value = value
 
@@ -6,7 +10,7 @@ class NotExistedNodeTypeException(Exception):
         return repr("Cannot find NodeType %s" % self.value)
 
 
-class ClusterNameExistedException(Exception):
+class ClusterNameExistedException(ClusterOperationException):
     def __init__(self, value):
         self.value = value
 
@@ -14,7 +18,7 @@ class ClusterNameExistedException(Exception):
         return repr("Cluster with name %s is already existed" % self.value)
 
 
-class NotSingleNameNodeException(Exception):
+class NotSingleNameNodeException(ClusterOperationException):
     def __init__(self, nn_count):
         self.nn_count = nn_count
 
@@ -24,7 +28,7 @@ class NotSingleNameNodeException(Exception):
             "Actual NN count is %s " % self.nn_count)
 
 
-class NotSingleJobTrackerException(Exception):
+class NotSingleJobTrackerException(ClusterOperationException):
     def __init__(self, jt_count):
         self.jt_count = jt_count
 

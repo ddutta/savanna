@@ -1,6 +1,8 @@
 from eho.server.service import api, validation
 
 from eho.server.utils.api import Rest, render, abort_and_log, request_data
+from eho.server.utils.exceptions import ClusterOperationException
+from jsonschema import ValidationError
 
 
 rest = Rest('v01', __name__)
@@ -65,6 +67,12 @@ def clusters_create():
         data = request_data()
         validation.validate_cluster_create(data)
         return render(api.create_cluster(data).dict)
+    except ValidationError, e:
+        abort_and_log(400, "Validation error while adding new cluster: %s"
+                      % str(e), e)
+    except ClusterOperationException, e:
+        abort_and_log(400, "Cluster creation error while adding new cluster %s"
+                      % str(e), e)
     except Exception, e:
         abort_and_log(500, "Exception while adding new Cluster", e)
 
