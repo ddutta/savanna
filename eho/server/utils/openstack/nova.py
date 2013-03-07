@@ -10,7 +10,8 @@ def novaclient(headers):
     compute_url = url_for(headers, 'compute')
 
     logging.debug('novaclient connection created using token '
-                  '"%s" and url "%s"', token, compute_url)
+                  '"%s", tenant "%s" and url "%s"',
+                  token, tenant, compute_url)
 
     nova = nova_client.Client(username, token, tenant,
                               auth_url=compute_url)
