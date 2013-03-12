@@ -40,7 +40,7 @@
     <script type="text/javascript" src="../_static/jquery.tweet.js"></script>
     <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="../index.html" />
     <link rel="next" title="Custom Horizon pages for EHO" href="../horizon/index.html" />
-    <link rel="prev" title="Elastic Hadoop on OpenStack Roadmap" href="../roadmap.html" />
+    <link rel="prev" title="EHO Roadmap" href="../roadmap.html" />
     <script type='text/javascript'>
         /*$(document).ready(function(){
             $("#twitter_feed").tweet({
@@ -68,7 +68,7 @@
           <a href="../horizon/index.html" title="Custom Horizon pages for EHO"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../roadmap.html" title="Elastic Hadoop on OpenStack Roadmap"
+          <a href="../roadmap.html" title="EHO Roadmap"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -113,7 +113,7 @@
 
             <h4>Previous topic</h4>
             <p class="topless"><a href="../roadmap.html"
-                                  title="previous chapter">Elastic Hadoop on OpenStack Roadmap</a></p>
+                                  title="previous chapter">EHO Roadmap</a></p>
             <h4>Next topic</h4>
             <p class="topless"><a href="../horizon/index.html"
                                   title="next chapter">Custom Horizon pages for EHO</a></p>
@@ -277,7 +277,9 @@ type as object (see below its fields)</td>
 </tr>
 <tr class="row-odd"><td>flavor_id</td>
 <td>string</td>
-<td>An id of the OpenStack&#8217;s flavor</td>
+<td>Name of OpenStack flavor which will be used to
+provision nodes. Actually this should be an id,
+we use names temporarily for our convenience</td>
 </tr>
 <tr class="row-even"><td>job_tracker</td>
 <td>section</td>
@@ -338,7 +340,7 @@ type as object (see below its fields)</td>
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
             <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
         <span class="p">},</span>
-        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
         <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
             <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -624,7 +626,7 @@ X-Auth-Token: SOME_AUTH_TOKEN</pre>
                 <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
                 <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
             <span class="p">},</span>
-            <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
             <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
                 <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -642,7 +644,7 @@ X-Auth-Token: SOME_AUTH_TOKEN</pre>
                 <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
                 <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
             <span class="p">},</span>
-            <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1235&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
             <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">2048</span><span class="p">,</span>
                 <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
@@ -686,7 +688,7 @@ defined in section 2.1.</p>
     <span class="nt">&quot;node_template&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;custom_user_template&quot;</span><span class="p">,</span>
         <span class="nt">&quot;node_type&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
         <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
             <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -714,7 +716,7 @@ defined in section 2.1.</p>
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
             <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
         <span class="p">},</span>
-        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
         <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
             <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -762,7 +764,7 @@ defined in section 2.1.</p>
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
             <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
         <span class="p">},</span>
-        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
         <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
             <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -808,7 +810,7 @@ with new data.</p>
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
             <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
         <span class="p">},</span>
-        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
         <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">402</span><span class="p">,</span>
             <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -835,7 +837,7 @@ with new data.</p>
             <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TT+DN&quot;</span><span class="p">,</span>
             <span class="nt">&quot;processes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;task_tracker&quot;</span><span class="p">,</span> <span class="s2">&quot;data_node&quot;</span><span class="p">]</span>
         <span class="p">},</span>
-        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;flavor_id&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.medium&quot;</span><span class="p">,</span>
         <span class="nt">&quot;task_tracker&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="nt">&quot;heap_size&quot;</span><span class="p">:</span> <span class="mi">402</span><span class="p">,</span>
             <span class="nt">&quot;max_map_tasks&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
@@ -1226,7 +1228,7 @@ Any and all data is immediately purged and is not recoverable.</p>
           <a href="../horizon/index.html" title="Custom Horizon pages for EHO"
              >next</a> |</li>
         <li class="right" >
-          <a href="../roadmap.html" title="Elastic Hadoop on OpenStack Roadmap"
+          <a href="../roadmap.html" title="EHO Roadmap"
              >previous</a> |</li>
         <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
       </ul>
