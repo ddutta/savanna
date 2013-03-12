@@ -19,7 +19,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <title>EHO Architecture (draft) &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    <title>How to Participate &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -39,8 +39,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.tweet.js"></script>
     <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="index.html" />
-    <link rel="next" title="EHO Roadmap" href="roadmap.html" />
-    <link rel="prev" title="How to Participate" href="how-to-participate.html" />
+    <link rel="next" title="EHO Architecture (draft)" href="architecture.html" />
+    <link rel="prev" title="EHO quickstart guide" href="quickstart.html" />
     <script type='text/javascript'>
         /*$(document).ready(function(){
             $("#twitter_feed").tweet({
@@ -65,10 +65,10 @@
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="roadmap.html" title="EHO Roadmap"
+          <a href="architecture.html" title="EHO Architecture (draft)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="how-to-participate.html" title="How to Participate"
+          <a href="quickstart.html" title="EHO quickstart guide"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -76,14 +76,14 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h4>Previous topic</h4>
-            <p class="topless"><a href="how-to-participate.html"
-                                  title="previous chapter">How to Participate</a></p>
+            <p class="topless"><a href="quickstart.html"
+                                  title="previous chapter">EHO quickstart guide</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="roadmap.html"
-                                  title="next chapter">EHO Roadmap</a></p>
+            <p class="topless"><a href="architecture.html"
+                                  title="next chapter">EHO Architecture (draft)</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/architecture.txt"
+              <li><a href="_sources/how-to-participate.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -107,21 +107,12 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="eho-architecture-draft">
-<h1>EHO Architecture (draft)<a class="headerlink" href="#eho-architecture-draft" title="Permalink to this headline">¶</a></h1>
-<img alt="_images/eho-architecture.png" src="_images/eho-architecture.png" />
-<p>The EHO architecture consists of several components:</p>
-<ul class="simple">
-<li>Cluster Configuration Manager  - all the business logic resides here</li>
-<li>Auth component - responsible for client authentication &amp; authorization</li>
-<li>DAL - Data Access Layer, persists internal models in DB</li>
-<li>VM Provisioning - component responsible for communication with Nova and Glance</li>
-<li>Deployment Engine - pluggable mechanism responsible for deploying Hadoop on provisioned VMs;
-existing management solutions like Apache Ambari and Cloudera Management Console could be utilized for that matter</li>
-<li>REST API - exposes EHO functionality via REST</li>
-<li>Python EHO Client - similar to other OpenStack components EHO has its own python client</li>
-<li>EHO pages - GUI for the EHO is located on Horizon</li>
-</ul>
+  <div class="section" id="how-to-participate">
+<h1>How to Participate<a class="headerlink" href="#how-to-participate" title="Permalink to this headline">¶</a></h1>
+<p>You can browse the code at <a class="reference external" href="https://github.com/Mirantis/eho">our github repo</a> and <a class="reference external" href="https://github.com/Mirantis/eho">here</a> are the instructions on how to launch EHO.</p>
+<p>If you would like to ask some questions, feel free to reach us on #eho irc channel at <a class="reference external" href="http://freenode.net">freenode</a>. Most likely we will be there from 6 to 20 UTC. If you prefer email, you can contact Sergey Lukjanov (<a class="reference external" href="mailto:slukjanov&#37;&#52;&#48;mirantis&#46;com">mailto:slukjanov<span>&#64;</span>mirantis<span>&#46;</span>com</a>)</p>
+<p>We&#8217;re going to hold public weekly meetings on Thursday at 18:00 UTC on our irc channel.</p>
+<p>If you want to contribute either to docs or to code, simply send us pull requests via github. We are going to migrate to Stack Forge later. You can file bugs at <a class="reference external" href="https://launchpad.net/eho">EHO launchpad page</a>.</p>
 </div>
 
 
@@ -140,10 +131,10 @@ existing management solutions like Apache Ambari and Cloudera Management Console
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="roadmap.html" title="EHO Roadmap"
+          <a href="architecture.html" title="EHO Architecture (draft)"
              >next</a> |</li>
         <li class="right" >
-          <a href="how-to-participate.html" title="How to Participate"
+          <a href="quickstart.html" title="EHO quickstart guide"
              >previous</a> |</li>
         <li><a href="index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
       </ul>
