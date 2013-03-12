@@ -215,10 +215,10 @@ cluster provisioning and analytics as a service.</p>
 </li>
 <li><p class="first">operation on the cluster: add/remove nodes;</p>
 </li>
-<li><p class="first">terminate the cluster when it’s not needed any more.</p>
+<li><p class="first">terminate the cluster when it’s not needed anymore.</p>
 </li>
 </ul>
-<p>For analytic as a service generic workflow will be as follows:</p>
+<p>For analytic as a service generic workflow will be as following:</p>
 <ul>
 <li><p class="first">select one of predefined Hadoop versions;</p>
 </li>
@@ -238,6 +238,7 @@ cluster provisioning and analytics as a service.</p>
 <blockquote>
 <div><ul class="simple">
 <li>all cluster provisioning and job execution will happen transparently to the user;</li>
+<li>cluster will be removed automatically after job completion;</li>
 </ul>
 </div></blockquote>
 </li>
@@ -270,7 +271,7 @@ of enhancements on the way which can help there.</p>
 <p>First, a FileSystem implementation for Swift: <a class="reference external" href="https://issues.apache.org/jira/browse/HADOOP-8545">HADOOP-8545</a>.
 With that thing in place, Hadoop jobs can work with Swift
 as naturally as with HDFS.</p>
-<p>On the Swift side, we have the change request: <a class="reference external" href="https://review.openstack.org/#/c/21015/">Change I6b1ba25b</a>.
+<p>On the Swift side, we have the change request: <a class="reference external" href="https://review.openstack.org/#/c/21015/">Change I6b1ba25b</a> (merged).
 It implements the ability to list endpoints for an object, account or container, to make it possible to integrate swift
 with software that relies on data locality information to avoid network overhead.</p>
 </div>
