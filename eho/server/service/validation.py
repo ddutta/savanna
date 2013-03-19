@@ -27,9 +27,8 @@ def validate(validate_func):
             try:
                 validate_func(request_data())
             except jsonschema.ValidationError, e:
-                abort_and_log(400,
-                              "Validation error while adding new cluster: %s"
-                              % str(e), e)
+                e.code = "VALIDATION_ERROR"
+                return bad_request(e)
             except ApiError, e:
                 return bad_request(e)
             except Exception, e:
