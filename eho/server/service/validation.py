@@ -13,9 +13,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from jsonschema import validate
 from eho.server.service import api
-import eho.server.utils.exceptions as exceptions
+from eho.server.utils.api import request_data, abort_and_log, render
+import jsonschema
+from eho.server.utils.exceptions import ApiError, \
+    ClusterNameExistedException, NotExistedNodeTypeException, \
+    NotSingleJobTrackerException, NotSingleNameNodeException
+
+
+def validate(validate_func):
+    def decorator(func):
+        def handler(*args, **kwargs):
+            try:
+                validate_func(request_data())
+            except jsonschema.ValidationError, e:
+                abort_and_log(400,
+                              "Validation error while adding new cluster: %s"
+                              % str(e), e)
+            except ApiError, e:
+                return bad_request(e)
+            except Exception, e:
+                abort_and_log(500, "Exception while adding new Cluster", e)
+
+            return func(*args, **kwargs)
+
+        return handler
+
+    return decorator
+
+
+def bad_request(error):
+    message = {
+        "error_code": 400,
+        "error_message": error.message,
+        "error_name": error.code
+    }
+    resp = render(message)
+    resp.status_code = 400
+
+    return resp
 
 
 def validate_cluster_create(cluster_values):
@@ -35,21 +71,22 @@ def validate_cluster_create(cluster_values):
         "required": ["name", "base_image_id", "node_templates"]
     }
 
-    validate(values, schema)
+    jsonschema.validate(values, schema)
 
     #check that requested cluster name is unique
     unique_names = [cluster.name for cluster in api.get_clusters()]
     if values['name'] in unique_names:
-        raise exceptions.ClusterNameExistedException(values['name'])
+        raise ClusterNameExistedException(values['name'])
 
     #check that requested templates are from already defined values
     node_templates = values['node_templates']
     possible_node_types = [nt.name for nt in api.get_node_templates()]
     for nt in node_templates:
         if nt not in possible_node_types:
-            raise exceptions.NotExistedNodeTypeException(nt)
+            raise NotExistedNodeTypeException(nt)
             #check node count is integer and non-zero value
-        validate(node_templates[nt], {"type": "integer", "minimum": 1})
+        jsonschema.validate(node_templates[nt],
+                            {"type": "integer", "minimum": 1})
 
     #check that requested cluster contains only 1 instance of NameNode
     # and 1 instance of JobTracker
@@ -65,7 +102,7 @@ def validate_cluster_create(cluster_values):
             nn_count += node_templates[nt_name]
 
     if nn_count != 1:
-        raise exceptions.NotSingleNameNodeException(nn_count)
+        raise NotSingleNameNodeException(nn_count)
 
     if jt_count != 1:
-        raise exceptions.NotSingleJobTrackerException(jt_count)
+        raise NotSingleJobTrackerException(jt_count)

@@ -13,10 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from eho.server.service import api, validation
+from eho.server.service import api
+from eho.server.service.validation import validate, validate_cluster_create
 from eho.server.utils.api import Rest, render, abort_and_log, request_data
-from eho.server.utils.exceptions import ClusterOperationException
-from jsonschema import ValidationError
 
 
 rest = Rest('v02', __name__)
@@ -76,19 +75,10 @@ def clusters_list():
 
 
 @rest.post('/clusters')
-#@validate(validation.validate_cluster_create)
+@validate(validate_cluster_create)
 def clusters_create():
-    try:
-        data = request_data()
-        validation.validate_cluster_create(data)
-        return render(api.create_cluster(data).wrapped_dict)
-    except ValidationError, e:
-        abort_and_log(400, "Validation error while adding new cluster: %s"
-                           % str(e), e)
-    except ClusterOperationException, e:
-        return bad_request(e)
-    except Exception, e:
-        abort_and_log(500, "Exception while adding new Cluster", e)
+    data = request_data()
+    return render(api.create_cluster(data).wrapped_dict)
 
 
 @rest.get('/clusters/<cluster_id>')
@@ -116,16 +106,3 @@ def clusters_update(cluster_id):
 def clusters_delete(cluster_id):
     api.terminate_cluster(id=cluster_id)
     return render()
-
-
-@rest.errorhandler(400)
-def bad_request(exception):
-    message = {
-        "error_code": 400,
-        "error_message": str(exception),
-        "error_name": str(exception.error_code)
-    }
-    resp = render(message)
-    resp.status_code = 400
-
-    return resp
