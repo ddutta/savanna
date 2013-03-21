@@ -311,7 +311,7 @@ class TestApi(unittest.TestCase):
         rv = self.app.post('/v0.2/some-tenant-id/clusters.json',
                            data=json.dumps(dict(
                                cluster=dict(
-                                   name='test-cluster_2',
+                                   name='test-cluster-2',
                                    base_image_id='base-image-id_2',
                                    node_templates={
                                        'jt_nn.medium': 1,
@@ -337,7 +337,7 @@ class TestApi(unittest.TestCase):
         self.assertEquals(data, {
             u'status': u'Starting',
             u'service_urls': {},
-            u'name': u'test-cluster_2',
+            u'name': u'test-cluster-2',
             u'base_image_id': u'base-image-id_2',
             u'node_templates': {
                 u'jt_nn.medium': 1,
