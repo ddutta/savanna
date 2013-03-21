@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 from eho.server.service import api
 from eho.server.utils.api import request_data, abort_and_log, render
 import jsonschema
@@ -42,13 +43,20 @@ def validate(validate_func):
 
 
 def bad_request(error):
+    error_code = 400
+
+    logging.debug("Validation Error occurred while creating new cluster: "
+                  "error_code=%s, error_message=%s, error_name=%s",
+                  error_code, error.message, error.code)
+
     message = {
-        "error_code": 400,
+        "error_code": error_code,
         "error_message": error.message,
         "error_name": error.code
     }
+
     resp = render(message)
-    resp.status_code = 400
+    resp.status_code = error_code
 
     return resp
 
@@ -61,7 +69,10 @@ def validate_cluster_create(cluster_values):
         "title": "Cluster creation schema",
         "type": "object",
         "properties": {
-            "name": {"type": "string", "minLength": 1, "pattern": "^\S*$"},
+            "name": {"type": "string", "minLength": 1,
+                     "pattern": "^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]"
+                                "*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z]"
+                                "[A-Za-z0-9\-]*[A-Za-z0-9])$"},
             "base_image_id": {"type": "string", "minLength": 1},
             "node_templates": {
                 "type": "object"
