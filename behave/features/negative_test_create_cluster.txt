@@ -1,0 +1,72 @@
+# @tags @tag
+# Feature: Negative test of cluster section
+#
+# Scenario: User can create cluster with blank cluster name
+#     When name: "", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with name that already exists
+#     When name: "QA_cluster_1", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with invalid characters in cluster name
+#     When name: "Q!A@_$c%l^u*ster", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with space in cluster name
+#     When name: "QA cluster", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with blank base image ID
+#     When name: "QA_cluster_2", im_id="", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with invalid characters in base image ID
+#     When name: "QA_cluster_3", im_id="!q@w#e$r", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with negative parameter in number of jt_nn
+#     When name: "QA_cluster_4", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="-1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with negative parameter in number of tt_dn
+#     When name: "QA_cluster_5", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="-1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with character in number of jt_nn
+#     When name: "QA_cluster_6", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="q!w@", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with character in number of tt_dn
+#     When name: "QA_cluster_7", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="tt_dn.small" & num="s@f%"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with invalid character in jt_nn
+#     When name: "QA_cluster_8", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="dj&dh^4j" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with invalid character in tt_dn
+#     When name: "QA_cluster_9", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="sh*ah&" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with blank jt_nn
+#     When name: "QA_cluster_10", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="" & num="1", tt_dn="tt_dn.small" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
+#
+# Scenario: User can create cluster with blank tt_dn
+#     When name: "QA_cluster_11", im_id="d9342ba8-4c51-441c-8d5b-f9e14a901299", jt_nn="jt_nn.medium" & num="1", tt_dn="" & num="1"
+#     And  User create cluster
+#     Then  Response is "400"
