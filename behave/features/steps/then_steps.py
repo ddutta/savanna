@@ -16,7 +16,7 @@ def response_list_clusters(context, list):
     loop = res_content_list_clusters['clusters']
     for x in loop:
         names.append(x.pop(u'name'))
-    print("%s == %s" % (names, list))
+    print("%s == %s" % (str(names), str(list)))
     assert str(names) == str(list)
 
 
