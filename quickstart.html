@@ -19,7 +19,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <title>EHO quickstart guide &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    <title>Savanna quickstart guide &mdash; savanna 0.1.a31.g0372a12 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -28,7 +28,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1',
+        VERSION:     '0.1.a31.g0372a12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -38,8 +38,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.tweet.js"></script>
-    <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="index.html" />
-    <link rel="prev" title="Custom Horizon pages for EHO" href="horizon/index.html" />
+    <link rel="top" title="savanna 0.1.a31.g0372a12 documentation" href="index.html" />
+    <link rel="prev" title="Custom Horizon pages for Savanna" href="horizon/index.html" />
     <script type='text/javascript'>
         /*$(document).ready(function(){
             $("#twitter_feed").tweet({
@@ -64,19 +64,22 @@
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="horizon/index.html" title="Custom Horizon pages for EHO"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="horizon/index.html" title="Custom Horizon pages for Savanna"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">EHO quickstart guide</a><ul>
+<li><a class="reference internal" href="#">Savanna quickstart guide</a><ul>
 <li><a class="reference internal" href="#setup-prerequisites">1 Setup prerequisites</a></li>
 <li><a class="reference internal" href="#image-setup">2 Image setup</a></li>
-<li><a class="reference internal" href="#eho-api-setup">3 EHO API SETUP</a></li>
+<li><a class="reference internal" href="#savanna-api-setup">3 Savanna API SETUP</a></li>
 <li><a class="reference internal" href="#hadoop-cluster-startup">4 Hadoop Cluster startup</a></li>
 </ul>
 </li>
@@ -84,7 +87,7 @@
 
             <h4>Previous topic</h4>
             <p class="topless"><a href="horizon/index.html"
-                                  title="previous chapter">Custom Horizon pages for EHO</a></p>
+                                  title="previous chapter">Custom Horizon pages for Savanna</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/quickstart.txt"
@@ -111,14 +114,14 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="eho-quickstart-guide">
-<h1>EHO quickstart guide<a class="headerlink" href="#eho-quickstart-guide" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="savanna-quickstart-guide">
+<h1>Savanna quickstart guide<a class="headerlink" href="#savanna-quickstart-guide" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="setup-prerequisites">
 <h2>1 Setup prerequisites<a class="headerlink" href="#setup-prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>1.1 OpenStack environment (Folsom+ version) installed.</p>
 <p>1.2 OpenStack compute has to have floating IP autoassigment. You can read more here: <a class="reference external" href="http://docs.openstack.org/trunk/openstack-compute/admin/content/associating-public-ip.html">http://docs.openstack.org/trunk/openstack-compute/admin/content/associating-public-ip.html</a></p>
-<p>1.3 Git should be installed on the machine where EHO_API will be deployed.</p>
-<p>1.4 Your OpenStack should have flavors with &#8216;m1.small&#8217; and &#8216;m1.medium&#8217; names defined because these flavors are referenced by EHO&#8217;s default Node Templates.
+<p>1.3 Git should be installed on the machine where Savanna_API will be deployed.</p>
+<p>1.4 Your OpenStack should have flavors with &#8216;m1.small&#8217; and &#8216;m1.medium&#8217; names defined because these flavors are referenced by Savanna&#8217;s default Node Templates.
 You can check which flavors you have by running</p>
 <div class="highlight-bash"><div class="highlight"><pre>nova flavor-list
 </pre></div>
@@ -131,7 +134,7 @@ You can check which flavors you have by running</p>
 </pre></div>
 </div>
 <p>2.2 Download tarball from the following URL:</p>
-<div class="highlight-bash"><div class="highlight"><pre>wget http://eho-files.mirantis.com/hdp-img-01.tar.gz
+<div class="highlight-bash"><div class="highlight"><pre>wget http://savanna-files.mirantis.com/hdp-img-01.tar.gz
 </pre></div>
 </div>
 <p>2.3 Unpack image and import it into Glance:</p>
@@ -163,14 +166,14 @@ glance image-create --name<span class="o">=</span>hdp.image --disk-format<span c
 </pre></div>
 </div>
 </div>
-<div class="section" id="eho-api-setup">
-<h2>3 EHO API SETUP<a class="headerlink" href="#eho-api-setup" title="Permalink to this headline">¶</a></h2>
-<p>3.1 Git clone repo from the <a class="reference external" href="https://github.com/Mirantis/eho">https://github.com/Mirantis/eho</a></p>
-<div class="highlight-bash"><div class="highlight"><pre>git clone git://github.com/Mirantis/eho.git
+<div class="section" id="savanna-api-setup">
+<h2>3 Savanna API SETUP<a class="headerlink" href="#savanna-api-setup" title="Permalink to this headline">¶</a></h2>
+<p>3.1 Git clone repo from the <a class="reference external" href="https://github.com/Mirantis/savanna">https://github.com/Mirantis/savanna</a></p>
+<div class="highlight-bash"><div class="highlight"><pre>git clone git://github.com/Mirantis/savanna.git
 </pre></div>
 </div>
 <p>3.2 Go to the cloned repo directory</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>eho
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>savanna
 </pre></div>
 </div>
 <p>3.3 Install python headers and virtualenv:</p>
@@ -200,50 +203,50 @@ glance image-create --name<span class="o">=</span>hdp.image --disk-format<span c
 <span class="nv">NODE_INTERNAL_NET</span> <span class="o">=</span> <span class="s1">&#39;novanetwork&#39;</span> &lt;- name of the OpenStack network from which IPs are assigned to VMs
 </pre></div>
 </div>
-<p>3.7 To run EHO from created environment just call:</p>
-<div class="highlight-bash"><div class="highlight"><pre>.venv/bin/python bin/eho-api --reset-db --stub-data --allow-cluster-ops
+<p>3.7 To run Savanna from created environment just call:</p>
+<div class="highlight-bash"><div class="highlight"><pre>.venv/bin/python bin/savanna-api --reset-db --stub-data --allow-cluster-ops
 </pre></div>
 </div>
-<p><strong>Note:</strong> <tt class="docutils literal"><span class="pre">--reset-db</span></tt> and <tt class="docutils literal"><span class="pre">--stub-data</span></tt> parameters should be inserted only with the first EHO-API startup.
-With these parameters supplied EHO will create sqlite db with predefined data in <tt class="docutils literal"><span class="pre">/tmp/eho-server.db</span></tt></p>
+<p><strong>Note:</strong> <tt class="docutils literal"><span class="pre">--reset-db</span></tt> and <tt class="docutils literal"><span class="pre">--stub-data</span></tt> parameters should be inserted only with the first Savanna-API startup.
+With these parameters supplied Savanna will create sqlite db with predefined data in <tt class="docutils literal"><span class="pre">/tmp/savanna-server.db</span></tt></p>
 <p>Next times these parameters should be omited:</p>
-<div class="highlight-bash"><div class="highlight"><pre>.venv/bin/python/ bin/eho-api --allow-cluster-ops
+<div class="highlight-bash"><div class="highlight"><pre>.venv/bin/python/ bin/savanna-api --allow-cluster-ops
 </pre></div>
 </div>
-<p>Now EHO service is running. Further steps show how you can verify from console that EHO API works properly.</p>
-<p>3.8 First install httpie program. It allows you to send http requests to EHO API service.</p>
+<p>Now Savanna service is running. Further steps show how you can verify from console that Savanna API works properly.</p>
+<p>3.8 First install httpie program. It allows you to send http requests to Savanna API service.</p>
 <div class="highlight-bash"><div class="highlight"><pre>sudo easy_install httpie
 </pre></div>
 </div>
-<p><strong>Note:</strong> sure you can use another HTTP client like curl to send requests to EHO service</p>
+<p><strong>Note:</strong> sure you can use another HTTP client like curl to send requests to Savanna service</p>
 <p>3.9 Then you need to get authentification token from OpenStack Keystone service:</p>
 <div class="highlight-bash"><div class="highlight"><pre>tools/get_auth_token &lt;username&gt; &lt;password&gt; &lt;tenant&gt;
 </pre></div>
 </div>
 <p>E.g.:</p>
-<div class="highlight-bash"><div class="highlight"><pre>tools/get_auth_token eho-user nova eho-dev
+<div class="highlight-bash"><div class="highlight"><pre>tools/get_auth_token savanna-user nova savanna-dev
 </pre></div>
 </div>
 <p>If authentication succeed, output will be as follows:</p>
 <div class="highlight-bash"><div class="highlight"><pre>Configuration has been loaded from <span class="s1">&#39;etc/local.cfg&#39;</span>
-User: eho-user
+User: savanna-user
 Password: nova
-Tenant: eho-dev
+Tenant: savanna-dev
 Auth URL: http://172.18.79.139:35357/v2.0/
 Auth succeed: True
 Auth token: d61e47a1423d477f9c77ecb23c64d424
-Tenant <span class="o">[</span>eho-dev<span class="o">]</span> id: 0677a89acc834e38bf8bb41665912416
+Tenant <span class="o">[</span>savanna-dev<span class="o">]</span> id: 0677a89acc834e38bf8bb41665912416
 </pre></div>
 </div>
-<p><strong>Note:</strong> Save the token because you have to supply it with every request to EHO in X-Auth-Token header.
+<p><strong>Note:</strong> Save the token because you have to supply it with every request to Savanna in X-Auth-Token header.
 You will also use tenant id in request URL</p>
-<p>3.10 Send http request to the EHO service:</p>
-<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>eho_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant_id<span class="o">}</span>/node-templates X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span>
+<p>3.10 Send http request to the Savanna service:</p>
+<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>savanna_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant_id<span class="o">}</span>/node-templates X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span>
 </pre></div>
 </div>
 <p>Where:</p>
 <ul class="simple">
-<li>eho_api_ip - hostname where EHO API service is running</li>
+<li>savanna_api_ip - hostname where Savanna API service is running</li>
 <li>tenant_id - id of the tenant for which you got token in previous item</li>
 <li>auth_token - token obtained in previous item</li>
 </ul>
@@ -268,7 +271,7 @@ Date: Mon, 11 Mar 2013 17:17:03 GMT
 </div>
 <div class="section" id="hadoop-cluster-startup">
 <h2>4 Hadoop Cluster startup<a class="headerlink" href="#hadoop-cluster-startup" title="Permalink to this headline">¶</a></h2>
-<p>4.1 Send the POST request to EHO API to create Hadoop Cluster.</p>
+<p>4.1 Send the POST request to Savanna API to create Hadoop Cluster.</p>
 <p>Create file with name <tt class="docutils literal"><span class="pre">cluster_create.json</span></tt> and fill it with the following content:</p>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;cluster&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -287,8 +290,8 @@ Date: Mon, 11 Mar 2013 17:17:03 GMT
 <li>&#8220;name&#8221; - name of the cluster being created</li>
 <li>&#8220;jt_nn.small&#8221;: 1 and &#8220;tt_dn.small&#8221;: 3 - names and numbers of Node Templates for Hadoop NameNodes and JobTracker; DataNodes and TaskTrackers.</li>
 </ul>
-<p>You can list available node templates by sending the following request to EHO API:</p>
-<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>eho_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant-id<span class="o">}</span>/node-templates X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span>
+<p>You can list available node templates by sending the following request to Savanna API:</p>
+<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>savanna_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant-id<span class="o">}</span>/node-templates X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -299,7 +302,7 @@ Date: Mon, 11 Mar 2013 17:17:03 GMT
 </pre></div>
 </div>
 <p>After creating the file you can send the request:</p>
-<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>eho_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant-id<span class="o">}</span>/clusters X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span> &lt; cluster_create.json
+<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>savanna_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant-id<span class="o">}</span>/clusters X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span> &lt; cluster_create.json
 </pre></div>
 </div>
 <p>Response for this request will look like:</p>
@@ -321,7 +324,7 @@ Date: Mon, 11 Mar 2013 17:17:03 GMT
 </pre></div>
 </div>
 <p>4.2 If the response in the 3.1. was <tt class="docutils literal"><span class="pre">202</span> <span class="pre">ACCEPTED</span></tt> then you can check status of new cluster:</p>
-<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>eho_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant-id<span class="o">}</span>/clusters/<span class="o">{</span>cluster_id<span class="o">}</span> X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span>
+<div class="highlight-bash"><div class="highlight"><pre>http http://<span class="o">{</span>savanna_api_ip<span class="o">}</span>:8080/v0.2/<span class="o">{</span>tenant-id<span class="o">}</span>/clusters/<span class="o">{</span>cluster_id<span class="o">}</span> X-Auth-Token:<span class="o">{</span>auth_token<span class="o">}</span>
 </pre></div>
 </div>
 <p>Where &#8220;cluster_id&#8221; - id of created cluster. In our example above it the id is &#8220;254d8a8c483046ab9209d7993cad2da2&#8221;</p>
@@ -429,9 +432,12 @@ using <span class="s1">&#39;swordfish&#39;</span> as password
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="horizon/index.html" title="Custom Horizon pages for EHO"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="horizon/index.html" title="Custom Horizon pages for Savanna"
              >previous</a> |</li>
-        <li><a href="index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

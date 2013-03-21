@@ -19,7 +19,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <title>EHO Architecture (draft) &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    <title>Savanna Architecture (draft) &mdash; savanna 0.1.a31.g0372a12 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -28,7 +28,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1',
+        VERSION:     '0.1.a31.g0372a12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -38,8 +38,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.tweet.js"></script>
-    <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="index.html" />
-    <link rel="next" title="EHO Roadmap" href="roadmap.html" />
+    <link rel="top" title="savanna 0.1.a31.g0372a12 documentation" href="index.html" />
+    <link rel="next" title="Savanna Roadmap" href="roadmap.html" />
     <link rel="prev" title="How to Participate" href="how-to-participate.html" />
     <script type='text/javascript'>
         /*$(document).ready(function(){
@@ -65,12 +65,15 @@
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="roadmap.html" title="EHO Roadmap"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="roadmap.html" title="Savanna Roadmap"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="how-to-participate.html" title="How to Participate"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -80,7 +83,7 @@
                                   title="previous chapter">How to Participate</a></p>
             <h4>Next topic</h4>
             <p class="topless"><a href="roadmap.html"
-                                  title="next chapter">EHO Roadmap</a></p>
+                                  title="next chapter">Savanna Roadmap</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/architecture.txt"
@@ -107,10 +110,10 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="eho-architecture-draft">
-<h1>EHO Architecture (draft)<a class="headerlink" href="#eho-architecture-draft" title="Permalink to this headline">¶</a></h1>
-<img alt="_images/eho-architecture.png" src="_images/eho-architecture.png" />
-<p>The EHO architecture consists of several components:</p>
+  <div class="section" id="savanna-architecture-draft">
+<h1>Savanna Architecture (draft)<a class="headerlink" href="#savanna-architecture-draft" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/savanna-architecture.png" src="_images/savanna-architecture.png" />
+<p>The Savanna architecture consists of several components:</p>
 <ul class="simple">
 <li>Cluster Configuration Manager  - all the business logic resides here</li>
 <li>Auth component - responsible for client authentication &amp; authorization</li>
@@ -118,9 +121,9 @@
 <li>VM Provisioning - component responsible for communication with Nova and Glance</li>
 <li>Deployment Engine - pluggable mechanism responsible for deploying Hadoop on provisioned VMs;
 existing management solutions like Apache Ambari and Cloudera Management Console could be utilized for that matter</li>
-<li>REST API - exposes EHO functionality via REST</li>
-<li>Python EHO Client - similar to other OpenStack components EHO has its own python client</li>
-<li>EHO pages - GUI for the EHO is located on Horizon</li>
+<li>REST API - exposes Savanna functionality via REST</li>
+<li>Python Savanna Client - similar to other OpenStack components Savanna has its own python client</li>
+<li>Savanna pages - GUI for the Savanna is located on Horizon</li>
 </ul>
 </div>
 
@@ -140,12 +143,15 @@ existing management solutions like Apache Ambari and Cloudera Management Console
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="roadmap.html" title="EHO Roadmap"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="roadmap.html" title="Savanna Roadmap"
              >next</a> |</li>
         <li class="right" >
           <a href="how-to-participate.html" title="How to Participate"
              >previous</a> |</li>
-        <li><a href="index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

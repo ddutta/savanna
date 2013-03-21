@@ -19,7 +19,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <title>Welcome to Elastic Hadoop on OpenStack documentation! &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    <title>Welcome to Savanna documentation! &mdash; savanna 0.1.a31.g0372a12 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -28,7 +28,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1',
+        VERSION:     '0.1.a31.g0372a12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -38,8 +38,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/jquery.tweet.js"></script>
-    <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="#" />
-    <link rel="next" title="EHO Architecture (draft)" href="architecture.html" />
+    <link rel="top" title="savanna 0.1.a31.g0372a12 documentation" href="#" />
+    <link rel="next" title="Savanna Architecture (draft)" href="architecture.html" />
     <script type='text/javascript'>
         /*$(document).ready(function(){
             $("#twitter_feed").tweet({
@@ -64,16 +64,19 @@
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="architecture.html" title="EHO Architecture (draft)"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="architecture.html" title="Savanna Architecture (draft)"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="#">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h3><a href="#">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">Welcome to Elastic Hadoop on OpenStack documentation!</a><ul>
+<li><a class="reference internal" href="#">Welcome to Savanna documentation!</a><ul>
 <li><a class="reference internal" href="#useful-links">Useful links</a><ul>
 </ul>
 </li>
@@ -92,7 +95,7 @@
 
             <h4>Next topic</h4>
             <p class="topless"><a href="architecture.html"
-                                  title="next chapter">EHO Architecture (draft)</a></p>
+                                  title="next chapter">Savanna Architecture (draft)</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/index.txt"
@@ -123,23 +126,24 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="welcome-to-elastic-hadoop-on-openstack-documentation">
-<h1>Welcome to Elastic Hadoop on OpenStack documentation!<a class="headerlink" href="#welcome-to-elastic-hadoop-on-openstack-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-savanna-documentation">
+<h1>Welcome to Savanna documentation!<a class="headerlink" href="#welcome-to-savanna-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="useful-links">
 <h2>Useful links<a class="headerlink" href="#useful-links" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="architecture.html">EHO Architecture (draft)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="roadmap.html">EHO Roadmap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="restapi/v02.html">EHO REST API v0.2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="horizon/index.html">Custom Horizon pages for EHO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">EHO quickstart guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Savanna Architecture (draft)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Savanna Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="restapi/v02.html">Savanna REST API v0.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="horizon/index.html">Custom Horizon pages for Savanna</a></li>
+<li class="toctree-l1"><a class="reference internal" href="horizon/howto.html">Savanna Horizon Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Savanna quickstart guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="how-to-participate.html">How to Participate</a></li>
 </ul>
 </div>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/mirantis/eho">Sources repo</a></li>
-<li><a class="reference external" href="https://launchpad.net/eho">Launchpad project</a></li>
+<li><a class="reference external" href="https://github.com/mirantis/savanna">Sources repo</a></li>
+<li><a class="reference external" href="https://launchpad.net/savanna">Launchpad project</a></li>
 </ul>
 </div>
 <div class="section" id="introduction">
@@ -147,10 +151,10 @@
 <p>Apache Hadoop is an industry standard and widely adopted MapReduce implementation.
 The aim of this project is to enable users to easily provision and manage Hadoop clusters on OpenStack.
 It is worth mentioning that Amazon provides Hadoop for several years as Amazon Elastic MapReduce (EMR) service.</p>
-<p>Elastic Hadoop on OpenStack (EHO) aims to provide users with simple means to provision a Hadoop cluster
+<p>Savanna aims to provide users with simple means to provision a Hadoop cluster
 by specifying several parameters like Hadoop version, cluster topology, nodes hardware details
-and a few more. After user fills in all the parameters, EHO deploys the cluster in a few minutes.
-Also EHO provides means to scale already provisioned cluster by adding/removing worker nodes on demand.</p>
+and a few more. After user fills in all the parameters, Savanna deploys the cluster in a few minutes.
+Also Savanna provides means to scale already provisioned cluster by adding/removing worker nodes on demand.</p>
 <p>The solution will address following use cases:</p>
 <ul class="simple">
 <li>fast provisioning of Hadoop clusters on OpenStack for Dev and QA;</li>
@@ -177,11 +181,11 @@ Also EHO provides means to scale already provisioned cluster by adding/removing 
 </div>
 <div class="section" id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
-<p>The EHO product communicates with the following OpenStack components:</p>
+<p>The Savanna product communicates with the following OpenStack components:</p>
 <ul class="simple">
-<li>Horizon - provides GUI with ability to use all of EHO’s features;</li>
+<li>Horizon - provides GUI with ability to use all of Savanna’s features;</li>
 <li>Keystone - authenticates users and provides security token that is used to work with the OpenStack,
-hence limiting user abilities in EHO to his OpenStack privileges;</li>
+hence limiting user abilities in Savanna to his OpenStack privileges;</li>
 <li>Nova - is used to provision VMs for Hadoop Cluster;</li>
 <li>Glance - Hadoop VM images are stored there, each image containing an installed OS and Hadoop;
 the pre-installed Hadoop should give us good handicap on node start-up;</li>
@@ -191,7 +195,7 @@ the pre-installed Hadoop should give us good handicap on node start-up;</li>
 </div>
 <div class="section" id="general-workflow">
 <h2>General Workflow<a class="headerlink" href="#general-workflow" title="Permalink to this headline">¶</a></h2>
-<p>EHO will provide two level of abstraction for API and UI based on the addressed use cases:
+<p>Savanna will provide two level of abstraction for API and UI based on the addressed use cases:
 cluster provisioning and analytics as a service.</p>
 <p>For the fast cluster provisioning generic workflow will be as following:</p>
 <ul>
@@ -200,7 +204,7 @@ cluster provisioning and analytics as a service.</p>
 <li><p class="first">select base image with or without pre-installed Hadoop:</p>
 <blockquote>
 <div><ul class="simple">
-<li>for base images without Hadoop pre-installed EHO will support pluggable deployment engines integrated with vendor tooling;</li>
+<li>for base images without Hadoop pre-installed Savanna will support pluggable deployment engines integrated with vendor tooling;</li>
 </ul>
 </div></blockquote>
 </li>
@@ -211,7 +215,7 @@ cluster provisioning and analytics as a service.</p>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">provision the cluster: EHO will provision VMs, install and configure Hadoop;</p>
+<li><p class="first">provision the cluster: Savanna will provision VMs, install and configure Hadoop;</p>
 </li>
 <li><p class="first">operation on the cluster: add/remove nodes;</p>
 </li>
@@ -248,20 +252,20 @@ cluster provisioning and analytics as a service.</p>
 </div>
 <div class="section" id="users-perspective">
 <h2>User’s Perspective<a class="headerlink" href="#users-perspective" title="Permalink to this headline">¶</a></h2>
-<p>While provisioning cluster through EHO, user operates on two types of entities: Node Templates and Clusters.</p>
+<p>While provisioning cluster through Savanna, user operates on two types of entities: Node Templates and Clusters.</p>
 <p>Node Template describes a node within cluster and it has several parameters. Node Type is one of the Node Template’s
 properties that determines what Hadoop processes will be running on the node and thereby its role in the cluster.
 It could be either of JobTracker, NameNode, TaskTracker or DataNode, or any logical combination of these.
 Also template encapsulates hardware parameters (flavor) for the node VM and configuration for Hadoop processes running on the node.</p>
 <p>Cluster entity simply represents Hadoop Cluster. It is mainly characterized by VM image with pre-installed Hadoop which
 will be used for cluster deployment and cluster topology. The topology is a list of node templates and respectively
-amount of nodes being deployed for each template. With respect to topology, EHO checks only that cluster has one JobTracker and one NameNode.</p>
+amount of nodes being deployed for each template. With respect to topology, Savanna checks only that cluster has one JobTracker and one NameNode.</p>
 <p>Each node template and cluster belongs to some tenant determined by user. Users have access only to objects located in
 tenants they have access to. Users could edit/delete only objects they created. Naturally admin users have full access to every object.
-That way EHO complies with general OpenStack access policy.</p>
-<p>EHO provides several kinds of Hadoop cluster topology. JobTracker and NameNode processes could be run either on a single
+That way Savanna complies with general OpenStack access policy.</p>
+<p>Savanna provides several kinds of Hadoop cluster topology. JobTracker and NameNode processes could be run either on a single
 VM or two separate ones. Also cluster could contain worker nodes of different types. Worker nodes could run both TaskTracker and DataNode,
-or either of these processes alone. EHO allows user to create cluster with any combination of these options.</p>
+or either of these processes alone. Savanna allows user to create cluster with any combination of these options.</p>
 </div>
 <div class="section" id="integration-with-swift">
 <h2>Integration with Swift<a class="headerlink" href="#integration-with-swift" title="Permalink to this headline">¶</a></h2>
@@ -277,40 +281,40 @@ with software that relies on data locality information to avoid network overhead
 </div>
 <div class="section" id="pluggable-deployment-and-monitoring">
 <h2>Pluggable Deployment and Monitoring<a class="headerlink" href="#pluggable-deployment-and-monitoring" title="Permalink to this headline">¶</a></h2>
-<p>In addition to the monitoring capabilities provided by vendor-specific Hadoop management tooling, EHO will provide pluggable integration with external monitoring systems such as Nagios or Zabbix.</p>
+<p>In addition to the monitoring capabilities provided by vendor-specific Hadoop management tooling, Savanna will provide pluggable integration with external monitoring systems such as Nagios or Zabbix.</p>
 <p>Both deployment and monitoring tools will be installed on stand-alone VMs, thus allowing a single instance to manage/monitor several clusters at once.</p>
 </div>
 <div class="section" id="id1">
 <h2>Useful links<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="architecture.html">EHO Architecture (draft)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="roadmap.html">EHO Roadmap</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Savanna Architecture (draft)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Savanna Roadmap</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="roadmap.html#phase-1-basic-cluster-provisioning">Phase 1 - Basic Cluster Provisioning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="roadmap.html#phase-2-cluster-operations">Phase 2 - Cluster Operations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="roadmap.html#phase-3-analytics-as-a-service">Phase 3 - Analytics as a Service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="roadmap.html#further-roadmap">Further Roadmap</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="restapi/v02.html">EHO REST API v0.2</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="restapi/v02.html">Savanna REST API v0.2</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="restapi/v02.html#general-api-information">1 General API information</a></li>
 <li class="toctree-l2"><a class="reference internal" href="restapi/v02.html#object-model">2 Object Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="restapi/v02.html#api-operations">3 API operations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="horizon/index.html">Custom Horizon pages for EHO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">EHO quickstart guide</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="horizon/index.html">Custom Horizon pages for Savanna</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Savanna quickstart guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#setup-prerequisites">1 Setup prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#image-setup">2 Image setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#eho-api-setup">3 EHO API SETUP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#savanna-api-setup">3 Savanna API SETUP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#hadoop-cluster-startup">4 Hadoop Cluster startup</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/mirantis/eho">Sources repo</a></li>
-<li><a class="reference external" href="https://launchpad.net/eho">Launchpad project</a></li>
+<li><a class="reference external" href="https://github.com/mirantis/savanna">Sources repo</a></li>
+<li><a class="reference external" href="https://launchpad.net/savanna">Launchpad project</a></li>
 </ul>
 </div>
 </div>
@@ -331,9 +335,12 @@ with software that relies on data locality information to avoid network overhead
           <a href="http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="architecture.html" title="EHO Architecture (draft)"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="architecture.html" title="Savanna Architecture (draft)"
              >next</a> |</li>
-        <li><a href="#">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="#">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

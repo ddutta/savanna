@@ -19,7 +19,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <title>EHO REST API v0.2 &mdash; Elastic Hadoop on OpenStack 0.1 documentation</title>
+    <title>Savanna REST API v0.2 &mdash; savanna 0.1.a31.g0372a12 documentation</title>
     
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -28,7 +28,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.1.a31.g0372a12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -38,9 +38,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/jquery.tweet.js"></script>
-    <link rel="top" title="Elastic Hadoop on OpenStack 0.1 documentation" href="../index.html" />
-    <link rel="next" title="Custom Horizon pages for EHO" href="../horizon/index.html" />
-    <link rel="prev" title="EHO Roadmap" href="../roadmap.html" />
+    <link rel="top" title="savanna 0.1.a31.g0372a12 documentation" href="../index.html" />
+    <link rel="next" title="Custom Horizon pages for Savanna" href="../horizon/index.html" />
+    <link rel="prev" title="Savanna Roadmap" href="../roadmap.html" />
     <script type='text/javascript'>
         /*$(document).ready(function(){
             $("#twitter_feed").tweet({
@@ -65,19 +65,22 @@
           <a href="../http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="../horizon/index.html" title="Custom Horizon pages for EHO"
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../horizon/index.html" title="Custom Horizon pages for Savanna"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../roadmap.html" title="EHO Roadmap"
+          <a href="../roadmap.html" title="Savanna Roadmap"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h3><a href="../index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference internal" href="#">EHO REST API v0.2</a><ul>
+<li><a class="reference internal" href="#">Savanna REST API v0.2</a><ul>
 <li><a class="reference internal" href="#general-api-information">1 General API information</a><ul>
 <li><a class="reference internal" href="#authentication-and-authorization">1.1 Authentication and Authorization</a></li>
 <li><a class="reference internal" href="#request-response-types">1.2 Request / Response Types</a></li>
@@ -113,10 +116,10 @@
 
             <h4>Previous topic</h4>
             <p class="topless"><a href="../roadmap.html"
-                                  title="previous chapter">EHO Roadmap</a></p>
+                                  title="previous chapter">Savanna Roadmap</a></p>
             <h4>Next topic</h4>
             <p class="topless"><a href="../horizon/index.html"
-                                  title="next chapter">Custom Horizon pages for EHO</a></p>
+                                  title="next chapter">Custom Horizon pages for Savanna</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="../_sources/restapi/v02.txt"
@@ -143,27 +146,27 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="eho-rest-api-v0-2">
-<h1>EHO REST API v0.2<a class="headerlink" href="#eho-rest-api-v0-2" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="savanna-rest-api-v0-2">
+<h1>Savanna REST API v0.2<a class="headerlink" href="#savanna-rest-api-v0-2" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="general-api-information">
 <h2>1 General API information<a class="headerlink" href="#general-api-information" title="Permalink to this headline">¶</a></h2>
-<p>This section contains base info about the EHO REST API design.</p>
+<p>This section contains base info about the Savanna REST API design.</p>
 <div class="section" id="authentication-and-authorization">
 <h3>1.1 Authentication and Authorization<a class="headerlink" href="#authentication-and-authorization" title="Permalink to this headline">¶</a></h3>
-<p>The EHO API uses the Keystone Identity Service as the default authentication service.
-When Keystone is enabled, users who submit requests to the EHO service must provide an authentication token
+<p>The Savanna API uses the Keystone Identity Service as the default authentication service.
+When Keystone is enabled, users who submit requests to the Savanna service must provide an authentication token
 in X-Auth-Token request header. User could obtain the token by authenticating to the Keystone endpoint.
 For more information about Keystone, see the OpenStack Identity Developer Guide.</p>
 <p>Also with each request user must specify OpenStack tenant in url path like that: &#8216;/v0.2/{tenant_id}/clusters&#8217;.
-EHO will perform the requested operation in that tenant using provided credentials. Therefore, user will be able
+Savanna will perform the requested operation in that tenant using provided credentials. Therefore, user will be able
 to create and manage clusters only within tenants he have access to.</p>
-<p>Currently EHO does not perform its own authorization checks. We are planning to implement them later. Each
-of the EHO objects described in section 2 (&#8216;Object Model&#8217;) will belong to some tenant. User will be able to
+<p>Currently Savanna does not perform its own authorization checks. We are planning to implement them later. Each
+of the Savanna objects described in section 2 (&#8216;Object Model&#8217;) will belong to some tenant. User will be able to
 perform operations only on objects he created or if he is an admin in the tenant to which object belongs.</p>
 </div>
 <div class="section" id="request-response-types">
 <h3>1.2 Request / Response Types<a class="headerlink" href="#request-response-types" title="Permalink to this headline">¶</a></h3>
-<p>The EHO API supports the JSON data serialization format.
+<p>The Savanna API supports the JSON data serialization format.
 This means that for requests that contain a body, the Content-Type header must be set to the MIME type value
 &#8220;application/json&#8221;. Also, clients should accept JSON serialized responses by specifying the Accept header
 with the MIME type value &#8220;application/json&#8221; or adding &#8221;.json&#8221; extension to the resource name.
@@ -180,20 +183,20 @@ Accept: application/json</pre>
 <div class="section" id="filtering-and-column-selection">
 <h3>1.3 Filtering and Column Selection<a class="headerlink" href="#filtering-and-column-selection" title="Permalink to this headline">¶</a></h3>
 <p>(It&#8217;s not implemented yet)</p>
-<p>The EHO API supports filtering based on all top level attributes of a resource.
+<p>The Savanna API supports filtering based on all top level attributes of a resource.
 Filters are applicable to all list requests.</p>
 <p>For example, the following request returns all clusters named &#8216;foobar&#8217;:</p>
 <div class="highlight-http"><pre>GET /v0.2/{tenant_id}/clusters?name=foobar</pre>
 </div>
-<p>When you specify multiple filters, the EHO API returns only objects that meet all filtering criteria.
+<p>When you specify multiple filters, the Savanna API returns only objects that meet all filtering criteria.
 The operation applies an AND condition among the filters, for example:</p>
 <div class="highlight-http"><pre>GET /v0.2/{tenant_id}/clusters?name=foo1&amp;some_attr=some_value</pre>
 </div>
 <p>Currently, there is no OR mechanism for filtering. Alternatively, you can issue a distinct request
 for each filter and build a response set from the received responses on the client-side.</p>
-<p>By default, the EHO service returns all attributes for any show or list call.
-The EHO API has a mechanism to limit the set of attributes returned.
-You can use the fields query parameter to control the attributes returned from the EHO API.</p>
+<p>By default, the Savanna service returns all attributes for any show or list call.
+The Savanna API has a mechanism to limit the set of attributes returned.
+You can use the fields query parameter to control the attributes returned from the Savanna API.</p>
 <p>For example, the following request returns only id, name and status for each cluster:</p>
 <div class="highlight-http"><pre>GET /v0.2/{tenant_id}/clusters.json?fields=id&amp;fields=name&amp;fields=status</pre>
 </div>
@@ -202,8 +205,8 @@ You can use the fields query parameter to control the attributes returned from t
 </div>
 <div class="section" id="faults">
 <h3>1.4 Faults<a class="headerlink" href="#faults" title="Permalink to this headline">¶</a></h3>
-<p>The EHO API returns an error response if a failure occurs while processing a request.
-EHO uses only standard HTTP error codes. 4xx errors indicate problems in the particular
+<p>The Savanna API returns an error response if a failure occurs while processing a request.
+Savanna uses only standard HTTP error codes. 4xx errors indicate problems in the particular
 request being sent from the client and 5xx errors indicate server-side problems.</p>
 <p>Here we can add table with all used error codes.</p>
 <p>The response body will contain richer information about the cause of the error.
@@ -566,8 +569,8 @@ In fact, a node is a virtual machine managed by OpenStack Nova. This object used
 <tbody valign="top">
 <tr class="row-even"><td>GET</td>
 <td>/v0.2/{tenant_id}/node-templates</td>
-<td>Lists summary for all Node Templates in EHO which
-belong to the Tenant with id &lt;tenant_id&gt;</td>
+<td>Lists summary for all Node Templates in Savanna
+which belong to the Tenant with id &lt;tenant_id&gt;</td>
 </tr>
 <tr class="row-odd"><td>POST</td>
 <td>/v0.2/{tenant_id}/node-templates</td>
@@ -607,7 +610,7 @@ node_template_id
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET http://eho/v0.2/775181/node-templates
+<div class="highlight-http"><pre>GET http://savanna/v0.2/775181/node-templates
 Accept: application/json
 X-Auth-Token: SOME_AUTH_TOKEN</pre>
 </div>
@@ -682,7 +685,7 @@ defined in section 2.1.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>POST http://eho/v0.2/775181/node-templates</pre>
+<div class="highlight-http"><pre>POST http://savanna/v0.2/775181/node-templates</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;node_template&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -749,7 +752,7 @@ defined in section 2.1.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET http://eho/v0.2/775181/node-templates/3421</pre>
+<div class="highlight-http"><pre>GET http://savanna/v0.2/775181/node-templates/3421</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
@@ -800,7 +803,7 @@ with new data.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>PUT http://eho/v0.2/775181/node-templates/3413</pre>
+<div class="highlight-http"><pre>PUT http://savanna/v0.2/775181/node-templates/3413</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;node_template&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -874,7 +877,7 @@ or removed.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>DELETE http://eho/v0.2/775181/node-templates/3421</pre>
+<div class="highlight-http"><pre>DELETE http://savanna/v0.2/775181/node-templates/3421</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="last highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
@@ -902,8 +905,8 @@ or removed.</p>
 <tbody valign="top">
 <tr class="row-even"><td>GET</td>
 <td>/v0.2/{tenant_id}/clusters</td>
-<td>Lists summary for all clusters in EHO which
-belong to the specified tenant</td>
+<td>Lists summary for all clusters in Savanna
+which belong to the specified tenant</td>
 </tr>
 <tr class="row-odd"><td>POST</td>
 <td>/v0.2/{tenant_id}/clusters</td>
@@ -940,7 +943,7 @@ each element in the list is a &#8220;Cluster object&#8221; described in section 
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET http://eho/v0.2/775181/clusters</pre>
+<div class="highlight-http"><pre>GET http://savanna/v0.2/775181/clusters</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
@@ -1020,7 +1023,7 @@ master node type, i.e. there must be exactly 1 JobTracker node and 1 NameNode no
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
 <blockquote>
-<div><div class="highlight-http"><pre>POST http://eho/v0.2/775181/clusters</pre>
+<div><div class="highlight-http"><pre>POST http://savanna/v0.2/775181/clusters</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;cluster&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -1078,7 +1081,7 @@ master node type, i.e. there must be exactly 1 JobTracker node and 1 NameNode no
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>GET http://eho/v0.2/775181/clusters/1234</pre>
+<div class="highlight-http"><pre>GET http://savanna/v0.2/775181/clusters/1234</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
@@ -1135,7 +1138,7 @@ take a look on cluster creation operation. All cluster Node Templates should be 
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>PUT http://eho/v0.2/775181/clusters/1234</pre>
+<div class="highlight-http"><pre>PUT http://savanna/v0.2/775181/clusters/1234</pre>
 </div>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;cluster&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -1197,7 +1200,7 @@ Any and all data is immediately purged and is not recoverable.</p>
 <dl class="docutils">
 <dt><strong>Example</strong>:</dt>
 <dd><p class="first"><strong>request</strong></p>
-<div class="highlight-http"><pre>DELETE http://eho/v0.2/775181/clusters/1234</pre>
+<div class="highlight-http"><pre>DELETE http://savanna/v0.2/775181/clusters/1234</pre>
 </div>
 <p><strong>response</strong></p>
 <div class="last highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
@@ -1225,12 +1228,15 @@ Any and all data is immediately purged and is not recoverable.</p>
           <a href="../http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
         <li class="right" >
-          <a href="../horizon/index.html" title="Custom Horizon pages for EHO"
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../horizon/index.html" title="Custom Horizon pages for Savanna"
              >next</a> |</li>
         <li class="right" >
-          <a href="../roadmap.html" title="EHO Roadmap"
+          <a href="../roadmap.html" title="Savanna Roadmap"
              >previous</a> |</li>
-        <li><a href="../index.html">Elastic Hadoop on OpenStack 0.1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">savanna 0.1.a31.g0372a12 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
