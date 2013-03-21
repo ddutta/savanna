@@ -1,11 +1,13 @@
 from behave import *
 from re import match, search
 
+
 @Then('Response is "{res_code}"')
 def chkStatus(context, res_code):
     global status_code
     print("%s == %s" % (status_code, res_code))
     assert status_code == int(res_code.strip())
+
 
 @Then('Response list of list clusters:"{list}"')
 def response_list_clusters(context, list):
@@ -17,6 +19,7 @@ def response_list_clusters(context, list):
     print("%s == %s" % (names, list))
     assert str(names) == str(list)
 
+
 @Then('Response for list cluster by id is:"{list}"')
 def response_get_cluster(context, list):
     global res_content_get_cluster
@@ -24,6 +27,7 @@ def response_get_cluster(context, list):
     id = cluster.pop(u'id')
     print("%s == %s" % (cluster, list))
     assert str(cluster) == str(list)
+
 
 @Then('Response list of list node_templates:"{list}"')
 def response_list_node_templates(context, list):
@@ -35,6 +39,7 @@ def response_list_node_templates(context, list):
     print("%s == %s" % (names, list))
     assert str(names) == str(list)
 
+
 @Then('Response for list node_template by id is:"{list}"')
 def response_get_cluster(context, list):
     global res_content_get_template
@@ -42,6 +47,7 @@ def response_get_cluster(context, list):
     id = template.pop(u'id')
     print("%s == %s" % (template, list))
     assert str(template) == str(list)
+
 
 @Then('Error content:"{list}"')
 def error_content(content, list):
