@@ -19,7 +19,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <title>savanna.tests.unit.test_api_v02 &mdash; savanna 0.1.a32.g2ab39e1 documentation</title>
+    <title>savanna.tests.unit.test_api_v02 &mdash; savanna 0.1.a39.gbbb912f documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -28,7 +28,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.1.a32.g2ab39e1',
+        VERSION:     '0.1.a39.gbbb912f',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -38,7 +38,7 @@
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/jquery.tweet.js"></script>
-    <link rel="top" title="savanna 0.1.a32.g2ab39e1 documentation" href="../../../../index.html" />
+    <link rel="top" title="savanna 0.1.a39.gbbb912f documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
     <script type='text/javascript'>
         /*$(document).ready(function(){
@@ -66,7 +66,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../index.html">savanna 0.1.a32.g2ab39e1 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">savanna 0.1.a39.gbbb912f documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -180,7 +180,7 @@
 <span class="n">CONF</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">CONF</span>
 <span class="n">CONF</span><span class="o">.</span><span class="n">import_opt</span><span class="p">(</span><span class="s">&#39;reset_db&#39;</span><span class="p">,</span> <span class="s">&#39;savanna.config&#39;</span><span class="p">)</span>
 <span class="n">CONF</span><span class="o">.</span><span class="n">import_opt</span><span class="p">(</span><span class="s">&#39;stub_data&#39;</span><span class="p">,</span> <span class="s">&#39;savanna.config&#39;</span><span class="p">)</span>
-<span class="n">CONF</span><span class="o">.</span><span class="n">import_opt</span><span class="p">(</span><span class="s">&#39;log_level&#39;</span><span class="p">,</span> <span class="s">&#39;savanna.config&#39;</span><span class="p">)</span>
+<span class="n">CONF</span><span class="o">.</span><span class="n">import_opt</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">,</span> <span class="s">&#39;savanna.openstack.common.log&#39;</span><span class="p">)</span>
 <span class="n">CONF</span><span class="o">.</span><span class="n">import_opt</span><span class="p">(</span><span class="s">&#39;allow_cluster_ops&#39;</span><span class="p">,</span> <span class="s">&#39;savanna.config&#39;</span><span class="p">)</span>
 <span class="n">CONF</span><span class="o">.</span><span class="n">import_opt</span><span class="p">(</span><span class="s">&#39;database_uri&#39;</span><span class="p">,</span> <span class="s">&#39;savanna.main&#39;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s">&#39;sqlalchemy&#39;</span><span class="p">)</span>
 <span class="n">CONF</span><span class="o">.</span><span class="n">import_opt</span><span class="p">(</span><span class="s">&#39;echo&#39;</span><span class="p">,</span> <span class="s">&#39;savanna.main&#39;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s">&#39;sqlalchemy&#39;</span><span class="p">)</span>
@@ -194,7 +194,7 @@
         <span class="c"># override configs</span>
         <span class="n">CONF</span><span class="o">.</span><span class="n">set_override</span><span class="p">(</span><span class="s">&#39;reset_db&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
         <span class="n">CONF</span><span class="o">.</span><span class="n">set_override</span><span class="p">(</span><span class="s">&#39;stub_data&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-        <span class="n">CONF</span><span class="o">.</span><span class="n">set_override</span><span class="p">(</span><span class="s">&#39;log_level&#39;</span><span class="p">,</span> <span class="s">&#39;DEBUG&#39;</span><span class="p">)</span>
+        <span class="n">CONF</span><span class="o">.</span><span class="n">set_override</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
         <span class="n">CONF</span><span class="o">.</span><span class="n">set_override</span><span class="p">(</span><span class="s">&#39;allow_cluster_ops&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>  <span class="c"># stub process</span>
         <span class="n">CONF</span><span class="o">.</span><span class="n">set_override</span><span class="p">(</span><span class="s">&#39;database_uri&#39;</span><span class="p">,</span> <span class="s">&#39;sqlite:///&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">,</span>
                           <span class="n">group</span><span class="o">=</span><span class="s">&#39;sqlalchemy&#39;</span><span class="p">)</span>
@@ -608,7 +608,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../../../index.html">savanna 0.1.a32.g2ab39e1 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">savanna 0.1.a39.gbbb912f documentation</a> &raquo;</li>
           <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
