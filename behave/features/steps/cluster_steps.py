@@ -9,7 +9,7 @@ path.append(path.append(".."))
 import RestApi
 import json
 rest = RestApi.RestApi()
-global cluster_ids
+#global cluster_ids
 cluster_ids = []
 
 

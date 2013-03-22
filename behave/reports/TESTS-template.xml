@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf8'?>
-<testsuite failures="0" name="template.Test of template section" skips="0" tests="6" time="0.318"><testcase classname="template.Test of template section" name="User can see templates" time="0.035"><system-out>
+<testsuite failures="0" name="template.Test of template section" skips="0" tests="6" time="0.288"><testcase classname="template.Test of template section" name="User can see templates" time="0.027"><system-out>
 <![CDATA[Steps:
         When User see templates ... passed
         Then Response is "200" ... passed
@@ -11,7 +11,7 @@ response = 200
 200 == 200
 
 ]]>
-</system-out></testcase><testcase classname="template.Test of template section" name="User can create template" time="0.118"><system-out>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can create template" time="0.101"><system-out>
 <![CDATA[Steps:
        Given node_template body ... passed
         When User create template ... passed
@@ -40,7 +40,7 @@ response = 202
 202 == 202
 
 ]]>
-</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.034"><system-out>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.041"><system-out>
 <![CDATA[Steps:
         When User see templates ... passed
         Then Response is "200" ... passed
@@ -52,31 +52,31 @@ response = 200
 200 == 200
 
 ]]>
-</system-out></testcase><testcase classname="template.Test of template section" name="User can get template by id" time="0.013"><system-out>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get template by id" time="0.01"><system-out>
 <![CDATA[Steps:
         When User get template with id: "0" ... passed
         Then Response is "200" ... passed
 
 Captured stdout:
-URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/39ff384edc2844c683e6c0e969d79894
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/46403e828b5e44dbb2f5be3c8dca4f9a
 response = 200
 
 200 == 200
 
 ]]>
-</system-out></testcase><testcase classname="template.Test of template section" name="User can delete template" time="0.09"><system-out>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can delete template" time="0.086"><system-out>
 <![CDATA[Steps:
         When User delete template with id: "0" ... passed
         Then Response is "204" ... passed
 
 Captured stdout:
-URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/39ff384edc2844c683e6c0e969d79894
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/46403e828b5e44dbb2f5be3c8dca4f9a
 response = 204
 
 204 == 204
 
 ]]>
-</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.028"><system-out>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.023"><system-out>
 <![CDATA[Steps:
         When User see templates ... passed
         Then Response is "200" ... passed
