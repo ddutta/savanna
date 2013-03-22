@@ -1,0 +1,289 @@
+<?xml version='1.0' encoding='utf8'?>
+<testsuite failures="0" name="template.Test of template section" skips="0" tests="18" time="1.706"><testcase classname="template.Test of template section" name="User can see templates" time="0.032"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can create template for TT+DN" time="0.227"><system-out>
+<![CDATA[Steps:
+       Given node_template body ... passed
+        When User create template ... passed
+        Then Response is "202" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+data = {
+    "node_template": {
+        "name": "QA-node-1",
+        "node_type": "TT+DN",
+        "flavor_id": "m1.medium",
+        "task_tracker": {
+            "heap_size": 384,
+            "max_map_tasks": 3,
+            "max_reduce_tasks": 1,
+            "task_heap_size": 640
+        },
+        "data_node": {
+            "heap_size": 384
+        }
+    }
+}
+response = 202
+
+202 == 202
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can see templates, if list has two templates" time="0.026"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can create template JT+NN" time="0.19"><system-out>
+<![CDATA[Steps:
+       Given node_template body ... passed
+        When User create template ... passed
+        Then Response is "202" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+data = {
+    "node_template": {
+        "name": "QA-node-2",
+        "node_type": "JT+NN",
+        "flavor_id": "m1.medium",
+        "job_tracker": {
+            "heap_size": 384
+        },
+        "name_node": {
+            "heap_size": 384
+        }
+    }
+}
+response = 202
+
+202 == 202
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can see templates, if list has two templates" time="0.026"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can create template NN" time="0.205"><system-out>
+<![CDATA[Steps:
+       Given node_template body ... passed
+        When User create template ... passed
+        Then Response is "202" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+data = {
+    "node_template": {
+        "name": "QA-node-3",
+        "node_type": "NN",
+        "flavor_id": "m1.medium",
+        "name_node": {
+            "heap_size": 384
+        }
+    }
+}
+response = 202
+
+202 == 202
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can see templates, if list has two templates" time="0.024"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2', u'QA-node-3']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2', u'QA-node-3'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2', u'QA-node-3']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can create template JT" time="0.184"><system-out>
+<![CDATA[Steps:
+       Given node_template body ... passed
+        When User create template ... passed
+        Then Response is "202" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+data = {
+    "node_template": {
+        "name": "QA-node-4",
+        "node_type": "JT",
+        "flavor_id": "m1.medium",
+        "job_tracker": {
+            "heap_size": 384
+        }
+    }
+}
+response = 202
+
+202 == 202
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can see templates, if list has two templates" time="0.022"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2', u'QA-node-3', u'QA-node-4']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2', u'QA-node-3', u'QA-node-4'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-1', u'QA-node-2', u'QA-node-3', u'QA-node-4']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get template by id" time="0.008"><system-out>
+<![CDATA[Steps:
+        When User get template with id: "0" ... passed
+        Then Response is "200" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/afc4d447980f4a009889b4b8fbe11426
+response = 200
+
+200 == 200
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can delete template" time="0.168"><system-out>
+<![CDATA[Steps:
+        When User delete template with id: "0" ... passed
+        Then Response is "204" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/afc4d447980f4a009889b4b8fbe11426
+response = 204
+
+204 == 204
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.023"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-2', u'QA-node-3', u'QA-node-4']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-2', u'QA-node-3', u'QA-node-4'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-2', u'QA-node-3', u'QA-node-4']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can delete template" time="0.169"><system-out>
+<![CDATA[Steps:
+        When User delete template with id: "3" ... passed
+        Then Response is "204" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/80eaadb591fb49f79b1a602490a1df70
+response = 204
+
+204 == 204
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.021"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-2', u'QA-node-3']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-2', u'QA-node-3'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-2', u'QA-node-3']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can delete template" time="0.152"><system-out>
+<![CDATA[Steps:
+        When User delete template with id: "1" ... passed
+        Then Response is "204" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/f53c75151026445688295b62fc816dd8
+response = 204
+
+204 == 204
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.023"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-3']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-3'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium', u'QA-node-3']
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can delete template" time="0.184"><system-out>
+<![CDATA[Steps:
+        When User delete template with id: "2" ... passed
+        Then Response is "204" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates/59389b4202aa419e89f3efbc20df4348
+response = 204
+
+204 == 204
+
+]]>
+</system-out></testcase><testcase classname="template.Test of template section" name="User can get templates" time="0.02"><system-out>
+<![CDATA[Steps:
+        When User see templates ... passed
+        Then Response is "200" ... passed
+         And Response list of list node_templates:"[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium']" ... passed
+
+Captured stdout:
+URL = http://127.0.0.1:8080/v0.2/6b26f08455ec449ea7a2d3da75339255/node-templates
+response = 200
+
+200 == 200
+[u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium'] == [u'jt_nn.small', u'jt_nn.medium', u'jt.small', u'jt.medium', u'nn.small', u'nn.medium', u'tt_dn.small', u'tt_dn.medium']
+
+]]>
+</system-out></testcase></testsuite>

@@ -45,7 +45,7 @@ def response_get_cluster(context, list):
     global res_content_get_template
     template = res_content_get_template['node_template']
     id = template.pop(u'id')
-    print("%s == %s" % (template, list))
+    print("%s == %s" % (str(template), str(list)))
     assert str(template) == str(list)
 
 

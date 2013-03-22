@@ -1,4 +1,5 @@
-#def before_feature(context, feature):
+def before_feature(context, feature):
+    context.ids = []
 #    model.init(environment='test')
 #    if 'browser' in feature.tags:
 #        context.server = simple_server.WSGIServer(('', 8000))

@@ -7,7 +7,6 @@ import json
 
 path.append(path.append(".."))
 rest = RestApi.RestApi()
-#global template_ids
 template_ids = []
 
 
@@ -30,7 +29,7 @@ def get_template(context, n):
     global error_content
     global status_code
     global res_content_get_template
-    res = rest.get_template(template_ids[int(n)])
+    res = rest.get_template(context.ids[int(n)])
     status_code = res.status_code
     if status_code == 200:
         res_content_get_template = json.loads(res.content)
@@ -54,7 +53,7 @@ def add_template(context):
     status_code = res.status_code
     if status_code == 202:
         res_content = json.loads(res.content)
-        template_ids.append(res_content['node_template'].get(u'id'))
+        context.ids.append(res_content['node_template'].get(u'id'))
     else:
         error_content = json.loads(res.content)
 
@@ -63,7 +62,7 @@ def add_template(context):
 def del_template(context, n):
     global error_content
     global status_code
-    res = rest.delete_template(template_ids[int(n)])
+    res = rest.delete_template(context.ids[int(n)])
     status_code = res.status_code
     if status_code != 204:
         error_content = json.loads(res.content)
@@ -75,7 +74,7 @@ def put_template(context, n):
     global status_code
     global res_content
     global template_body
-    res = rest.create_template(template_body, template_ids[int(n)])
+    res = rest.create_template(template_body, context.ids[int(n)])
     status_code = res.status_code
     if status_code == 202:
         res_content = json.loads(res.content)
