@@ -3,15 +3,11 @@ from random import choice, randint
 from string import ascii_lowercase
 from sys import path
 from time import sleep
-
-path.append(path.append(".."))
-
 import RestApi
 import json
-rest = RestApi.RestApi()
-global cluster_ids
-cluster_ids = []
 
+path.append(path.append(".."))
+rest = RestApi.RestApi()
 
 @When('User see clusters')
 def get_clusters(context):
@@ -32,7 +28,7 @@ def get_cluster(context, n):
     global status_code
     global res_content_get_cluster
     global error_content
-    res = rest.get_cluster(cluster_ids[int(n)])
+    res = rest.get_cluster(context.ids[int(n)])
     status_code = res.status_code
     if status_code == 200:
         res_content_get_cluster = json.loads(res.content)
@@ -57,7 +53,7 @@ def add_cluster(context):
     if status_code == 202:
         #sleep(60)
         res_content = json.loads(res.content)
-        cluster_ids.append(res_content['cluster'].get(u'id'))
+        context.ids.append(res_content['cluster'].get(u'id'))
     else:
         error_content = json.loads(res.content)
 
@@ -66,7 +62,7 @@ def add_cluster(context):
 def del_cluster(context, n):
     global status_code
     global error_content
-    res = rest.delete_cluster(cluster_ids[int(n)])
+    res = rest.delete_cluster(context.ids[int(n)])
     status_code = res.status_code
     if status_code != 204:
         error_content = json.loads(res.content)
@@ -78,7 +74,7 @@ def put_cluster(context, n):
     global res_content
     global cluster_body
     global error_content
-    res = rest.create_cluster(cluster_body, cluster_ids[int(n)])
+    res = rest.create_cluster(cluster_body, context.ids[int(n)])
     status_code = res.status_code
     if status_code == 202:
         res_content = json.loads(res.content)

@@ -16,3 +16,8 @@ Feature: Negative tests for get cluster
     Scenario: User can get cluster with name "cluster-QA" by ID #No validation
         #When User get cluster with id: "0"
         #Then  Response is "400"
+
+    Scenario: User can get clusters, if all cluster is delete
+        When  User see clusters
+        Then  Response is "200"
+        And Response list of list clusters:"[]"

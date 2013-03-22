@@ -7,8 +7,6 @@ import json
 
 path.append(path.append(".."))
 rest = RestApi.RestApi()
-template_ids = []
-
 
 @When('User see templates')
 def get_templates(context):
